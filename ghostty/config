@@ -1,0 +1,20 @@
+# theme
+theme = "Catppuccin Mocha"
+# font-family = "Fira Code Nerd Font Mono"
+# font-family = "Hack Gen Console NF"
+# font-family = "Hack Nerd Font Mono"
+# font-family = "Hiragino Kaku Gothic ProN"
+# font-family = "JetBrains Mono"
+
+# window style
+macos-titlebar-style = "hidden"
+window-padding-y = 0
+
+# Set background color and opacity
+background-image = "~/.config/ghostty/image/1363709.png"
+background-image-opacity = 0.15
+background-image-position = "center"
+background-image-fit = "cover"
+
+# keybindings
+macos-option-as-alt = true

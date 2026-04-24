@@ -1,0 +1,36 @@
+name: nix-validate
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/*.yml"
+      - "flake.lock"
+      - "flake.nix"
+      - "nix/**"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/*.yml"
+      - "flake.lock"
+      - "flake.nix"
+      - "nix/**"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      NIX_CONFIG: accept-flake-config = true
+    steps:
+      - uses: actions/checkout@v6
+      - uses: DeterminateSystems/determinate-nix-action@v3
+        with:
+          github-token: ${{ github.token }}
+      - name: Build czg package
+        run: nix build .#packages.x86_64-linux.czg
+      - name: Build Ubuntu home-manager activation package
+        run: nix build .#homeConfigurations.ubuntu.activationPackage

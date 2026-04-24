@@ -1,0 +1,5 @@
+require("config.lazy")
+require("config.lsp")
+require("config.keybindings")
+require("config.vim-options")
+require("config.diagnostic")
