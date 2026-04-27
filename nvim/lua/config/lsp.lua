@@ -3,6 +3,11 @@ if vim.g.vscode then
 end
 
 local capabilities = require("ddc_source_lsp").make_client_capabilities()
+
+vim.lsp.config("*", {
+  capabilities = capabilities,
+})
+
 local servers = {
 	"solargraph",
 	"html",
@@ -25,9 +30,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
 	end,
 })
-
-for _, server in ipairs(servers) do
-	vim.lsp.config(server, { capabilities = capabilities })
-end
 
 vim.lsp.enable(servers)
