@@ -2,7 +2,28 @@
   "profiles": [
     {
       "complex_modifications": {
+        "parameters": {
+          "basic.to_delayed_action_delay_milliseconds": 200,
+          "basic.to_if_alone_timeout_milliseconds": 200,
+          "basic.to_if_held_down_threshold_milliseconds": 200
+        },
         "rules": [
+          {
+            "description": "Tap Left Command for ESC",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "left_command",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": {
+                  "key_code": "left_command"
+                },
+                "to_if_alone": [{ "key_code": "escape" }],
+                "type": "basic"
+              }
+            ]
+          },
           {
             "description": "Ctrl-j to Kana on PowerPoint",
             "manipulators": [
@@ -49,6 +70,10 @@
             {
               "from": { "key_code": "caps_lock" },
               "to": [{ "key_code": "left_control" }]
+            },
+            {
+              "from": { "key_code": "left_control" },
+              "to": [{ "key_code": "caps_lock" }]
             }
           ]
         }
