@@ -91,6 +91,7 @@ on-mode-changed = []
     M = ['EV2780', 'Built-in Retina Display', 'secondary'] # Message apps (Slack, Teams, Discord, Outlook, Mail)
     O = ['EV2780', 'Built-in Retina Display', 'secondary'] # Obsidian
     P = ['EV2780', 'Built-in Retina Display', 'secondary'] # PDF (Preview, Skim)
+    Q = ['secondary']
     S = 'main' # Slides (Powerpoint)
     V = 'main' # VSCode
     W = 'main' # WezTerm
