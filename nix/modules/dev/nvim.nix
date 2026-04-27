@@ -32,7 +32,7 @@
     paths = [tsSelected] ++ tsSelected.dependencies;
   };
   nvimPackages = with pkgs; [
-    clang-tools
+    # clang-tools
     lua-language-server
     prettier
     vscode-langservers-extracted
