@@ -8,11 +8,11 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "czg";
-  version = "1.12.0";
+  version = "1.13.0";
 
   src = fetchurl {
     url = "https://registry.npmjs.org/czg/-/czg-${finalAttrs.version}.tgz";
-    hash = "sha256-PN3JjQcnB6tvQNZQV7QLt7V+5/fNAM6lcvLIpMzWCgo=";
+    hash = "sha256-vNJoDpD0lKN7EsLUWEbQlnQ2aebCmL11Zm1dmI8jwFg=";
   };
 
   nativeBuildInputs = [makeWrapper];
