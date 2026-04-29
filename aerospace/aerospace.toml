@@ -162,7 +162,7 @@ on-mode-changed = []
     alt-9 = 'workspace 9'
     alt-0 = 'workspace 0'
     alt-a = 'workspace A'
-    alt-b = ['exec-and-forget open /Applications/Dia.app', 'workspace B']
+    alt-b = ['exec-and-forget open /Applications/Zen.app', 'workspace B']
     # alt-c = 'workspace C'
     alt-d = ['exec-and-forget open /Applications/Discord.app', 'workspace M']
     alt-e = 'workspace E'
@@ -260,6 +260,10 @@ on-mode-changed = []
 ## Chrome
 [[on-window-detected]]
     if.app-id = 'com.google.Chrome'
+    run = 'move-node-to-workspace B'
+## Zen
+[[on-window-detected]]
+    if.app-id = 'app.zen-browser.zen'
     run = 'move-node-to-workspace B'
 
 # workspace E: Entertainment
