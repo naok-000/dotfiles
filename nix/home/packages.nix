@@ -16,6 +16,7 @@
   shellPackages = with pkgs; [
     bottom
     coreutils
+    eza
     fastfetch
     fd
     fzf

@@ -43,6 +43,7 @@ in {
         rm = ''echo "This is not the command you are looking for. Use trash-put instead."; false'';
         tp = "trash-put";
         awsume = ". awsume";
+        ls = "eza --icons";
       }
       // lib.optionalAttrs pkgs.stdenv.isDarwin {
         tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
@@ -75,9 +76,6 @@ in {
     ];
 
     initContent = ''
-      if command -v colorls >/dev/null 2>&1; then
-        alias ls='colorls'
-      fi
 
       # Auto-complete function for AWSume
       fpath=(~/.awsume/zsh-autocomplete/ $fpath)
