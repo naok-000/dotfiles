@@ -31,7 +31,7 @@ vim.opt.clipboard = "unnamedplus"
 -- wrap line
 vim.opt.wrap = false
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "tex",
+	pattern = ["tex", "markdown"],
 	callback = function()
 		vim.opt_local.wrap = true
 		vim.opt_local.linebreak = true
