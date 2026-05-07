@@ -50,6 +50,7 @@
     deno
     golangci-lint
     lua
+    markdownlint-cli2
     nodejs
     textlint
     pipx

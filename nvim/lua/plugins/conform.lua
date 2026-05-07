@@ -17,7 +17,7 @@ return {
 					json = { "prettierd", "prettier", stop_after_first = true },
 					c = { "clang_format" },
 					cpp = { "clang_format" },
-					markdown = { "prettier", stop_after_first = true },
+					markdown = { --[[ "markdownlint-cli2", ]] "prettierd", "prettier", stop_after_first = true },
 					tex = { "latexindent" },
 					bib = { "bibtex-tidy" },
 					nix = { "alejandra" },

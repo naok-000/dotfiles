@@ -8,6 +8,7 @@ vim.g.markdown_recommended_style = 0
 -- leader, bg
 vim.g.mapleader = " "
 vim.g.background = "dark"
+vim.opt.termguicolors = true
 
 -- don't create swp
 vim.opt.swapfile = false

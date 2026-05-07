@@ -15,6 +15,7 @@ local servers = {
 	"clangd",
 	"pyright",
 	"ruff",
+	"rust_analyzer",
 	"texlab",
 	"gopls",
 }
