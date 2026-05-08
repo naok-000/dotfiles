@@ -78,6 +78,7 @@
     hugo
     imagemagick
     llm-agents.codex
+    mo
     poppler-utils
     wezterm
   ];
