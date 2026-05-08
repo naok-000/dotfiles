@@ -17,7 +17,7 @@ return {
 					json = { "prettierd", "prettier", stop_after_first = true },
 					c = { "clang_format" },
 					cpp = { "clang_format" },
-					markdown = { --[[ "markdownlint-cli2", ]] "prettierd", "prettier", stop_after_first = true },
+					markdown = { "prettierd", "markdown_formatter_ja" },
 					tex = { "latexindent" },
 					bib = { "bibtex-tidy" },
 					nix = { "alejandra" },
@@ -25,6 +25,11 @@ return {
 				},
 
 				formatters = {
+					markdown_formatter_ja = {
+						command = "markdown-formatter-ja",
+						args = { "--width", "80" },
+						stdin = true,
+					},
 					latexindent = {
 						cwd = util.root_file({ ".latexindent.yaml", ".git" }),
 

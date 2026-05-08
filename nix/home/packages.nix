@@ -24,6 +24,7 @@
     mtr
     ripgrep
     tldr
+    trash-cli
     tree
     wget
   ];

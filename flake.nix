@@ -17,6 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     llm-agents.url = "github:numtide/llm-agents.nix";
+    markdown-formatter-ja.url = "github:naok-000/markdown-formatter-ja";
   };
 
   outputs = inputs @ {
@@ -26,6 +27,7 @@
     neovim-nightly-overlay,
     home-manager,
     llm-agents,
+    markdown-formatter-ja,
     ...
   }: let
     darwinUsername = "kobayashinaotaro";
@@ -38,7 +40,7 @@
     overlays = [
       neovim-nightly-overlay.overlays.default
       llm-agents.overlays.default
-      (import ./nix/overlays/default.nix)
+      (import ./nix/overlays/default.nix {inherit markdown-formatter-ja;})
     ];
     githubSigningKeys = {
       ${darwinProfileName} = "${darwinHomeDirectory}/.ssh/id_ed25519-github_sign";

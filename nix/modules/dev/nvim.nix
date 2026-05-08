@@ -34,6 +34,7 @@
   nvimPackages = with pkgs; [
     # clang-tools
     lua-language-server
+    markdown-formatter-ja
     prettier
     vscode-langservers-extracted
     prettierd
