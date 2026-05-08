@@ -32,5 +32,7 @@ jobs:
           github-token: ${{ github.token }}
       - name: Build czg package
         run: nix build .#packages.x86_64-linux.czg
+      - name: Build mo package
+        run: nix build .#packages.x86_64-linux.mo
       - name: Build Ubuntu home-manager activation package
         run: nix build .#homeConfigurations.ubuntu.activationPackage

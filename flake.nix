@@ -174,13 +174,13 @@
       aarch64-darwin = let
         pkgs = mkPkgs "aarch64-darwin";
       in {
-        inherit (pkgs) czg;
+        inherit (pkgs) czg mo;
       };
 
       x86_64-linux = let
         pkgs = mkPkgs "x86_64-linux";
       in {
-        inherit (pkgs) czg;
+        inherit (pkgs) czg mo;
       };
     };
   };

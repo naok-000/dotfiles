@@ -1,0 +1,40 @@
+name: update-mo
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "53 3 * * 3"
+
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      NIX_CONFIG: accept-flake-config = true
+    steps:
+      - uses: actions/checkout@v6
+      - uses: DeterminateSystems/determinate-nix-action@v3
+        with:
+          github-token: ${{ github.token }}
+      - name: Update mo package
+        run: nix run github:Mic92/nix-update -- mo --flake --use-update-script
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.GH_TOKEN_FOR_UPDATES || github.token }}
+          branch: update-mo
+          base: main
+          delete-branch: true
+          commit-message: "chore(mo): update mo"
+          title: "chore(mo): update mo"
+          body: |
+            Automated update of the custom `mo` package.
+          labels: |
+            dependencies
+            nix
+          add-paths: |
+            nix/pkgs/mo.nix

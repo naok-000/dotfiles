@@ -2,17 +2,18 @@
   lib,
   stdenvNoCC,
   fetchurl,
+  nix-update-script,
   unzip,
 }: let
-  version = "1.5.2";
+  version = "1.5.3";
   sources = {
     aarch64-darwin = {
       file = "mo_v${version}_darwin_arm64.zip";
-      hash = "sha256-gHFUrxXUV0bugu7KFN36c7ZnHIYIyxSe2qpaIPa1IZ8=";
+      hash = "sha256-ChC2+jOSwzZiroVTbRFGWXoyO6d6/540HkEwILPGWVg=";
     };
     x86_64-linux = {
       file = "mo_v${version}_linux_amd64.tar.gz";
-      hash = "sha256-5X/kbDScVqe5cLuveS15wUnLGzpB/ykmXon4ECKyBRY=";
+      hash = "sha256-gkfBWbbvnUEwyJ6vmBJQEswiXygKuBNCCzLEOHEq4O0=";
     };
   };
   source = sources.${stdenvNoCC.hostPlatform.system};
@@ -37,6 +38,11 @@ in
 
       runHook postInstall
     '';
+
+    passthru.updateScript = nix-update-script {
+      attrPath = "mo";
+      extraArgs = ["--flake"];
+    };
 
     meta = with lib; {
       description = "Markdown viewer that opens .md files in a browser";
