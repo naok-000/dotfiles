@@ -212,11 +212,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1778248980,
-        "narHash": "sha256-Dy8XF7BXYYS1qsOlkkn16ErNX5g6+zVzhMi5i/ysf6Y=",
+        "lastModified": 1778300536,
+        "narHash": "sha256-3l0y/qSgQOVJOSu+mRVt0qlc4ZlXFlhPpYUPFPOje3M=",
         "owner": "naok-000",
         "repo": "markdown-formatter-ja",
-        "rev": "26ae62fa801c29fdc3d71c0c1c1835242110b4b5",
+        "rev": "29009961111e90f07926e2c4d7bac9d8a2d942a9",
         "type": "github"
       },
       "original": {

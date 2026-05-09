@@ -17,6 +17,7 @@ return {
 				text = { "textlint" },
 				tex = { "textlint" },
         go = { "golangci-lint" },
+        rust = { "clippy" },
 			}
 		end,
 	},

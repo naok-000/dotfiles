@@ -22,6 +22,7 @@ return {
 					bib = { "bibtex-tidy" },
 					nix = { "alejandra" },
 					go = { "gofmt", "goimports" },
+					rust = { "rustfmt" },
 				},
 
 				formatters = {
