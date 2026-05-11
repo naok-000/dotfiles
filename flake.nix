@@ -120,6 +120,7 @@
             };
             nixpkgs.hostPlatform = system;
           })
+          ./nix/modules/dev/fonts.nix
           ./nix/modules/dev/homebrew.nix
           ./nix/modules/dev/colima.nix
           ./nix/modules/dev/mlx-lm-server.nix
@@ -176,13 +177,13 @@
       aarch64-darwin = let
         pkgs = mkPkgs "aarch64-darwin";
       in {
-        inherit (pkgs) czg mo;
+        inherit (pkgs) czg libtexprintf mo;
       };
 
       x86_64-linux = let
         pkgs = mkPkgs "x86_64-linux";
       in {
-        inherit (pkgs) czg mo;
+        inherit (pkgs) czg libtexprintf mo;
       };
     };
   };

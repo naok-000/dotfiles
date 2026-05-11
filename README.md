@@ -34,5 +34,6 @@ $ git add . && sudo darwin-rebuild switch --flake .#kobayashinaotaro
 ## Package Management Policy
 
 - CLI and development tools are managed by Nix (`nix/home/packages.nix` and modules).
-- GUI apps and fonts are managed by Homebrew Casks declared in `flake.nix` via `nix-darwin` `homebrew` options.
+- Fonts are managed by Nixpkgs through `nix/modules/dev/fonts.nix`.
+- GUI apps are managed by Homebrew Casks declared through `nix-darwin` `homebrew` options.
 - Avoid installing unmanaged packages with ad-hoc `brew install` where possible.

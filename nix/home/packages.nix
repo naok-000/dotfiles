@@ -56,6 +56,7 @@
     textlint
     pipx
     python3
+    python314Packages.pylatexenc
     rustc
     taplo
     texlivePackages.latexindent
@@ -78,6 +79,7 @@
     bibtex-tidy
     hugo
     imagemagick
+    libtexprintf
     llm-agents.codex
     mo
     poppler-utils
