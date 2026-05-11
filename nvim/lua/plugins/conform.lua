@@ -17,7 +17,7 @@ return {
 					json = { "prettierd", "prettier", stop_after_first = true },
 					c = { "clang_format" },
 					cpp = { "clang_format" },
-					markdown = { "prettierd", "markdown_formatter_ja" },
+					markdown = { "markdown_formatter_ja" },
 					tex = { "latexindent" },
 					bib = { "bibtex-tidy" },
 					nix = { "alejandra" },

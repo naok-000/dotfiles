@@ -12,7 +12,7 @@ return {
 			dashboard = { enabled = false },
 			explorer = { enabled = false },
 			indent = {
-				enabled = true,
+				enabled = false,
 				animate = { enabled = false },
 			},
 			input = { enabled = true },

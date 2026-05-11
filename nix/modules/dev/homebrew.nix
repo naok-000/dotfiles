@@ -21,7 +21,6 @@
       "font-inter"
       "font-bizter"
       "jordanbaird-ice"
-      "macskk"
       "skim"
       "time-out"
       "xquartz"

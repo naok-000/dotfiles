@@ -1,5 +1,5 @@
 return {
 	"delphinus/skkeleton_indicator.nvim",
-  -- enabled = false,
+  enabled = true,
 	opts = {},
 }

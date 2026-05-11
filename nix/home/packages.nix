@@ -99,6 +99,7 @@
     aerospace
     colima
     docker-credential-helpers
+    macskk
   ];
 in {
   home.packages =
