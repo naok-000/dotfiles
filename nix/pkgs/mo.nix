@@ -9,7 +9,7 @@
   sources = {
     aarch64-darwin = {
       file = "mo_v${version}_darwin_arm64.zip";
-      hash = "sha256-ChC2+jOSwzZiroVTbRFGWXoyO6d6/540HkEwILPGWVg=";
+      hash = "sha256-B3PXf1JjP87Pw84F0Epvuaa39Xtzx9QJKckgn7t4afQ=";
     };
     x86_64-linux = {
       file = "mo_v${version}_linux_amd64.tar.gz";
