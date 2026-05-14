@@ -80,7 +80,6 @@
     bibtex-tidy
     hugo
     imagemagick
-    libtexprintf
     llm-agents.codex
     mo
     poppler-utils
