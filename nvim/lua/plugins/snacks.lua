@@ -25,7 +25,7 @@ return {
 				enabled = false,
 			},
 			words = { enabled = not vim.g.vscode },
-			image = { enabled = true },
+			image = { enabled = false },
 		},
 		keys = {
 			{

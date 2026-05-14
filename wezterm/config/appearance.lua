@@ -14,8 +14,8 @@ function M.apply(config)
 	config.font_size = 16.0
 	config.line_height = 1.1
 
-	config.window_background_opacity = 0.92
-	config.macos_window_background_blur = 28
+	config.window_background_opacity = 1.0
+	config.macos_window_background_blur = 0
 	config.default_cursor_style = "SteadyBar"
 	config.inactive_pane_hsb = {
 		saturation = 0.92,

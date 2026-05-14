@@ -5,6 +5,7 @@ local M = {}
 
 local resize_amount = 3
 local resize_mode = "resize_pane"
+local transparent_opacity = 0.82
 local direction_keys = {
 	h = "Left",
 	j = "Down",
@@ -62,6 +63,25 @@ local function activate_resize_mode()
 	end)
 end
 
+local function toggle_transparent_background()
+	return wezterm.action_callback(function(window, _)
+		local overrides = window:get_config_overrides() or {}
+		local is_transparent = overrides.window_background_opacity == transparent_opacity
+
+		if is_transparent then
+			overrides.window_background_opacity = nil
+			overrides.macos_window_background_blur = nil
+			window:toast_notification("WezTerm", "Transparent background: off", nil, 1200)
+		else
+			overrides.window_background_opacity = transparent_opacity
+			overrides.macos_window_background_blur = 0
+			window:toast_notification("WezTerm", "Transparent background: on", nil, 1200)
+		end
+
+		window:set_config_overrides(overrides)
+	end)
+end
+
 local function close_copy_mode()
 	return act.CopyMode("Close")
 end
@@ -115,6 +135,11 @@ function M.apply(config)
 			key = "r",
 			mods = "LEADER",
 			action = act.ReloadConfiguration,
+		},
+		{
+			key = "t",
+			mods = "LEADER",
+			action = toggle_transparent_background(),
 		},
 		{
 			key = "h",

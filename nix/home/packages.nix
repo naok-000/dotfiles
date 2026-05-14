@@ -51,6 +51,7 @@
     deno
     golangci-lint
     lua
+    luarocks
     markdownlint-cli2
     nodejs
     textlint
