@@ -111,6 +111,10 @@
             environment.systemPackages = [
               pkgs.vim
             ];
+            security.pam.services.sudo_local = {
+              touchIdAuth = true;
+              reattach = true;
+            };
             # Disable nix-darwin's nix management; use Determinate Nix instead.
             nix.enable = false;
             system = {
