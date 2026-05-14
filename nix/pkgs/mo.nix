@@ -5,7 +5,7 @@
   nix-update-script,
   unzip,
 }: let
-  version = "1.5.3";
+  version = "1.5.5";
   sources = {
     aarch64-darwin = {
       file = "mo_v${version}_darwin_arm64.zip";
@@ -13,7 +13,7 @@
     };
     x86_64-linux = {
       file = "mo_v${version}_linux_amd64.tar.gz";
-      hash = "sha256-gkfBWbbvnUEwyJ6vmBJQEswiXygKuBNCCzLEOHEq4O0=";
+      hash = "sha256-I38SHMd2PPODZ5/ZGKJMefWfda9vNcNU4qALLi4UTzE=";
     };
   };
   source = sources.${stdenvNoCC.hostPlatform.system};
