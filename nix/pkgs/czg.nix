@@ -40,7 +40,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   passthru.updateScript = nix-update-script {
     attrPath = "czg";
-    extraArgs = [ "--flake" ];
+    extraArgs = ["--flake"];
   };
 
   meta = with lib; {

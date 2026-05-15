@@ -1,4 +1,8 @@
-{config, githubSigningKey, ...}: {
+{
+  config,
+  githubSigningKey,
+  ...
+}: {
   programs.git = {
     enable = true;
     lfs.enable = true;

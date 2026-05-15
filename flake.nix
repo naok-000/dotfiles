@@ -59,6 +59,21 @@
         inherit system overlays;
       };
 
+    mkFormatter = system: let
+      pkgs = mkPkgs system;
+    in
+      pkgs.writeShellApplication {
+        name = "dotfiles-fmt";
+        runtimeInputs = [pkgs.alejandra];
+        text = ''
+          if [ "$#" -eq 0 ]; then
+            exec alejandra .
+          fi
+
+          exec alejandra "$@"
+        '';
+      };
+
     # Build common Home Manager user identity fields.
     mkUserHome = {
       username,
@@ -189,6 +204,11 @@
       in {
         inherit (pkgs) czg libtexprintf mo;
       };
+    };
+
+    formatter = {
+      aarch64-darwin = mkFormatter "aarch64-darwin";
+      x86_64-linux = mkFormatter "x86_64-linux";
     };
   };
 }

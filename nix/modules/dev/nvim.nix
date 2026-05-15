@@ -48,6 +48,8 @@ in {
     enable = true;
     package = pkgs.neovim;
     defaultEditor = true;
+    withRuby = true;
+    withPython3 = true;
   };
 
   home.packages = nvimPackages;

@@ -28,20 +28,21 @@
       ".aerospace.toml".source = dotfilesRoot + /aerospace/aerospace.toml;
     };
 
-  home.activation.dockerConfig = lib.hm.dag.entryAfter [
-    "writeBoundary"
-  ] (lib.optionalString pkgs.stdenv.isDarwin ''
-    dockerConfigDir="${config.home.homeDirectory}/.docker"
-    dockerConfigFile="$dockerConfigDir/config.json"
+  home.activation.dockerConfig =
+    lib.hm.dag.entryAfter [
+      "writeBoundary"
+    ] (lib.optionalString pkgs.stdenv.isDarwin ''
+      dockerConfigDir="${config.home.homeDirectory}/.docker"
+      dockerConfigFile="$dockerConfigDir/config.json"
 
-    if [[ -n "''${DRY_RUN:-}" ]]; then
-      echo "Would initialize $dockerConfigFile"
-    else
-      mkdir -p "$dockerConfigDir"
+      if [[ -n "''${DRY_RUN:-}" ]]; then
+        echo "Would initialize $dockerConfigFile"
+      else
+        mkdir -p "$dockerConfigDir"
 
-      if [[ ! -e "$dockerConfigFile" ]]; then
-        printf '%s\n' '{"credsStore":"osxkeychain"}' > "$dockerConfigFile"
+        if [[ ! -e "$dockerConfigFile" ]]; then
+          printf '%s\n' '{"credsStore":"osxkeychain"}' > "$dockerConfigFile"
+        fi
       fi
-    fi
-  '');
+    '');
 }
