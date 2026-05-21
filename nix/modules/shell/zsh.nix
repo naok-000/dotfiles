@@ -43,7 +43,7 @@ in {
         rm = ''echo "This is not the command you are looking for. Use trash-put instead."; false'';
         tp = "trash-put";
         awsume = ". awsume";
-        ls = "eza --icons";
+        ls = "eza --icons always";
       }
       // lib.optionalAttrs pkgs.stdenv.isDarwin {
         tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";

@@ -26,6 +26,9 @@
           insteadOf = "https://github.com/";
         };
       };
+      init = {
+        defaultBranch = "main";
+      };
     };
     includes = [
       {
