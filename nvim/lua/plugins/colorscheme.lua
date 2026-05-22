@@ -6,7 +6,7 @@ return {
 		config = function()
 			require("catppuccin").setup({
 				flavour = "mocha",
-        transparent_background = true,
+				transparent_background = true,
 				styles = {
 					comments = { "italic" },
 					conditionals = { "italic" },
@@ -53,13 +53,14 @@ return {
 						indentscope_color = "",
 					},
 					noice = true,
-          notify = true,
+					notify = true,
 					copilot_vim = true,
 					snacks = {
 						enabled = true,
 						indent_scope_color = "lavender",
 					},
 				},
+				lualine = true,
 			})
 			vim.cmd.colorscheme("catppuccin")
 		end,
@@ -106,7 +107,7 @@ return {
 	},
 	{
 		"Mofiqul/vscode.nvim",
-    cond = not vim.g.vscode,
+		cond = not vim.g.vscode,
 		lazy = false,
 		priority = 1000,
 		config = function()
