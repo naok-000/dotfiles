@@ -61,8 +61,12 @@
     python314Packages.pylatexenc
     rustc
     taplo
-    texlivePackages.latexindent
     uv
+  ];
+
+  latexPackages = with pkgs; [
+    inkscape
+    texliveFull
   ];
 
   cloudPackages = with pkgs; [
@@ -93,6 +97,7 @@
     gitPackages
     buildPackages
     languagePackages
+    latexPackages
     cloudPackages
     embeddedPackages
     appPackages
