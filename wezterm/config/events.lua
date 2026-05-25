@@ -21,7 +21,7 @@ function M.apply(_, palette)
 		local foreground = palette.subtext
 
 		if tab.is_active then
-			background = palette.mauve
+			background = palette.accent
 			foreground = palette.bg
 		elseif hover then
 			background = palette.surface_hover
@@ -54,13 +54,13 @@ function M.apply(_, palette)
 		window_modes[window:window_id()] = active_key_table
 
 		if window:leader_is_active() then
-			push_segment(palette, cells, palette.peach, palette.bg, " PREFIX ")
+			push_segment(palette, cells, palette.warning, palette.bg, " PREFIX ")
 		end
 
 		if active_key_table == "resize_pane" then
-			push_segment(palette, cells, palette.green, palette.bg, " RESIZE ")
+			push_segment(palette, cells, palette.success, palette.bg, " RESIZE ")
 		elseif active_key_table == "copy_mode" then
-			push_segment(palette, cells, palette.mauve, palette.bg, " COPY ")
+			push_segment(palette, cells, palette.accent, palette.bg, " COPY ")
 		elseif active_key_table == "search_mode" then
 			push_segment(palette, cells, palette.surface_hover, palette.text, " SEARCH ")
 		end

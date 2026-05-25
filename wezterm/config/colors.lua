@@ -1,35 +1,32 @@
 local wezterm = require("wezterm")
 
 local M = {
-	palette = {
-		bg = "#090b10",
-		surface = "#141824",
-		surface_hover = "#1b2030",
-		overlay = "#6c7086",
-		text = "#cdd6f4",
-		subtext = "#a6adc8",
-		mauve = "#cba6f7",
-		peach = "#fab387",
-		green = "#a6e3a1",
-	},
+	color_scheme = "Catppuccin Mocha",
+	palette = {},
 }
 
-function M.apply(config)
-	local custom = wezterm.color.get_builtin_schemes()["Catppuccin Mocha"]
-	custom.background = M.palette.bg
-	custom.selection_bg = "#3d355f"
-	custom.tab_bar.background = M.palette.bg
-	custom.tab_bar.active_tab.bg_color = M.palette.mauve
-	custom.tab_bar.active_tab.fg_color = M.palette.bg
-	custom.tab_bar.inactive_tab.bg_color = M.palette.surface
-	custom.tab_bar.inactive_tab.fg_color = M.palette.subtext
-	custom.tab_bar.inactive_tab_hover.bg_color = M.palette.surface_hover
-	custom.tab_bar.inactive_tab_hover.fg_color = M.palette.text
-
-	config.color_schemes = {
-		OLEDppuccin = custom,
+local function palette_from_scheme(scheme)
+	return {
+		bg = scheme.background,
+		surface = scheme.ansi[8],
+		surface_hover = scheme.brights[8],
+		text = scheme.foreground,
+		subtext = scheme.brights[7],
+		accent = scheme.ansi[5],
+		warning = scheme.brights[2],
+		success = scheme.ansi[3],
 	}
-	config.color_scheme = "OLEDppuccin"
+end
+
+function M.apply(config)
+	local scheme = wezterm.color.get_builtin_schemes()[M.color_scheme]
+
+	if scheme == nil then
+		error("unknown wezterm color scheme: " .. M.color_scheme)
+	end
+
+	M.palette = palette_from_scheme(scheme)
+	config.color_scheme = M.color_scheme
 end
 
 return M

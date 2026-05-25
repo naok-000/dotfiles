@@ -10,5 +10,7 @@
     inter
     noto-fonts-color-emoji
     nerd-fonts.symbols-only
+    plemoljp-nf
+    sarasa-gothic
   ];
 }
