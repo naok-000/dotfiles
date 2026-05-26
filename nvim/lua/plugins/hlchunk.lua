@@ -6,8 +6,8 @@ return {
 			chunk = {
 				enable = true,
 				style = {
-					{ fg = "#b4befe" },
-					{ fg = "#fab387" },
+					{ fg = "#006800" },
+					{ fg = "#a60000" },
 				},
 				duration = 100,
 				delay = 100,

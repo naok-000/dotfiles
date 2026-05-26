@@ -117,4 +117,24 @@ return {
 			vim.cmd.colorscheme("vscode")
 		end,
 	},
+	{
+		"altercation/vim-colors-solarized",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			vim.opt.background = "light"
+			vim.cmd.colorscheme("solarized")
+		end,
+	},
+	{
+		"miikanissi/modus-themes.nvim",
+		priority = 1,
+		config = function()
+			require("modus-themes").setup({
+				style = "modus_operandi",
+				variant = "tinted",
+			})
+			vim.cmd([[colorscheme modus]])
+		end,
+	},
 }

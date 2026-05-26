@@ -1,7 +1,10 @@
 local wezterm = require("wezterm")
 
 local M = {
-	color_scheme = "Catppuccin Mocha",
+	color_scheme = "Modus-Operandi-Tinted",
+	-- color_scheme = "Solarized Light (Gogh)",
+	-- color_scheme = "Solarized (light) (terminal.sexy)",
+	-- color_scheme = "Catppuccin Mocha",
 	palette = {},
 }
 

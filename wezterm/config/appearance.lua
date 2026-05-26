@@ -5,9 +5,9 @@ local M = {}
 function M.apply(config)
 	config.use_ime = true
 	config.font = wezterm.font_with_fallback({
+		"UDEV Gothic 35NFLG",
 		"HackGen Console NF",
     "PlemolJP35 Console NF",
-		"UDEV Gothic 35NFLG",
 		"JetBrainsMono Nerd Font Mono",
 		"Noto Color Emoji",
 		"Symbols Nerd Font Mono",
