@@ -3,7 +3,7 @@
     enable = true;
     enableGitIntegration = true;
     options = {
-      features = "catppuccin-mocha";
+      features = "modus-operandi-tinted";
       true-color = "always";
       line-numbers = "true";
     };

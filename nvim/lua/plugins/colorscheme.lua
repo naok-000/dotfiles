@@ -1,71 +1,5 @@
 return {
 	{
-		"catppuccin/nvim",
-		name = "catppuccin",
-		priority = 100,
-		config = function()
-			require("catppuccin").setup({
-				flavour = "mocha",
-				transparent_background = true,
-				styles = {
-					comments = { "italic" },
-					conditionals = { "italic" },
-					loops = { "italic" },
-					functions = {},
-					keywords = {},
-					strings = {},
-					variables = {},
-					numbers = {},
-					booleans = {},
-					properties = {},
-					types = { "italic" },
-					operators = {},
-				},
-				lsp_styles = {
-					virtual_text = {
-						errors = { "italic" },
-						hints = { "italic" },
-						warnings = { "italic" },
-						information = { "italic" },
-						ok = { "italic" },
-					},
-					underlines = {
-						errors = { "underline" },
-						hints = { "underline" },
-						warnings = { "underline" },
-						information = { "underline" },
-						ok = { "underline" },
-					},
-					inlay_hints = {
-						background = true,
-					},
-				},
-				color_overrides = {},
-				custom_highlights = {},
-				default_integrations = true,
-				auto_integrations = false,
-				integrations = {
-					alpha = true,
-					cmp = true,
-					gitsigns = true,
-					mini = {
-						enabled = true,
-						indentscope_color = "",
-					},
-					noice = true,
-					notify = true,
-					copilot_vim = true,
-					snacks = {
-						enabled = true,
-						indent_scope_color = "lavender",
-					},
-				},
-				lualine = true,
-			})
-			vim.cmd.colorscheme("catppuccin")
-		end,
-	},
-	{
 		"rebelot/kanagawa.nvim",
 
 		lazy = false,
@@ -128,6 +62,7 @@ return {
 	},
 	{
 		"miikanissi/modus-themes.nvim",
+		lazy = false,
 		priority = 1,
 		config = function()
 			require("modus-themes").setup({

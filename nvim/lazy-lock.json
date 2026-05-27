@@ -4,7 +4,6 @@
   "ale": { "branch": "master", "commit": "2a3af30fb6a725ec7215435369b310b1d2dc4c09" },
   "alpha-nvim": { "branch": "main", "commit": "6c6a89d5b068b5251c8bdf0dd57bb921bcfeeb09" },
   "ascii.nvim": { "branch": "master", "commit": "70783fea66e99525221e52dce3b3489c05354181" },
-  "catppuccin": { "branch": "main", "commit": "426dbebe06b5c69fd846ceb17b42e12f890aedf1" },
   "conform.nvim": { "branch": "master", "commit": "18aeab3d63d350dcf44d64c462cc489a3412af40" },
   "copilot.vim": { "branch": "release", "commit": "a12fd5672110c8aa7e3c8419e28c96943ca179be" },
   "ddc-file": { "branch": "main", "commit": "ee76b9dce4d92b427cd65c35dc6ee56b29d8f6e9" },

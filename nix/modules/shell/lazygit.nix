@@ -5,12 +5,26 @@
     settings = {
       gui = {
         nerdFontsVersion = "3";
+        theme = {
+          activeBorderColor = ["blue" "bold"];
+          inactiveBorderColor = ["default"];
+          searchingActiveBorderColor = ["cyan" "bold"];
+          optionsTextColor = ["blue"];
+          selectedLineBgColor = ["blue"];
+          inactiveViewSelectedLineBgColor = ["bold"];
+          cherryPickedCommitFgColor = ["blue"];
+          cherryPickedCommitBgColor = ["cyan"];
+          markedBaseCommitFgColor = ["blue"];
+          markedBaseCommitBgColor = ["yellow"];
+          unstagedChangesColor = ["red"];
+          defaultFgColor = ["default"];
+        };
       };
       git = {
         pagers = [
           {
             colorArg = "always";
-            pager = "delta --dark --paging=never";
+            pager = "delta --light --paging=never";
           }
         ];
       };

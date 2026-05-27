@@ -5,10 +5,6 @@ return {
 		require("hlchunk").setup({
 			chunk = {
 				enable = true,
-				style = {
-					{ fg = "#006800" },
-					{ fg = "#a60000" },
-				},
 				duration = 100,
 				delay = 100,
 			},

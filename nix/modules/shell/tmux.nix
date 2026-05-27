@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  theme = import ../../theme/modus-operandi-tinted.nix;
+in {
   programs.tmux = {
     enable = true;
     prefix = "C-b";
@@ -9,7 +11,6 @@
     plugins = with pkgs.tmuxPlugins; [
       online-status
       battery
-      catppuccin
       resurrect
       continuum
     ];
@@ -44,11 +45,19 @@
 
       set -g renumber-windows on
 
-      set -g @catppuccin_flavor "mocha"
-      set -g @catppuccin_status_background "none"
-      set -g @catppuccin_window_status_style "none"
-      set -g @catppuccin_pane_status_enabled "off"
-      set -g @catppuccin_pane_border_status "off"
+      set -g @thm_bg "${theme.background}"
+      set -g @thm_fg "${theme.foreground}"
+      set -g @thm_red "${theme.ansi.red}"
+      set -g @thm_green "${theme.ansi.green}"
+      set -g @thm_yellow "${theme.ansi.yellow}"
+      set -g @thm_blue "${theme.ansi.blue}"
+      set -g @thm_magenta "${theme.ansi.magenta}"
+      set -g @thm_bright_magenta "${theme.ansi.brightMagenta}"
+      set -g @thm_bright_red "${theme.ansi.brightRed}"
+      set -g @thm_bright_yellow "${theme.ansi.brightYellow}"
+      set -g @thm_cyan "${theme.ansi.cyan}"
+      set -g @thm_overlay_0 "${theme.ansi.brightBlack}"
+      set -g @thm_surface_0 "${theme.surface}"
 
       set -g @online_icon "ok"
       set -g @offline_icon "nok"
@@ -57,7 +66,7 @@
       set -g status-left ""
       set -ga status-left "#{?client_prefix,#{#[bg=#{@thm_red},fg=#{@thm_bg},bold]  #S },#{#[bg=default,fg=#{@thm_green}]  #S }}"
       set -ga status-left "#[bg=default,fg=#{@thm_overlay_0},none]│"
-      set -ga status-left "#[bg=default,fg=#{@thm_maroon}]  #{pane_current_command} "
+      set -ga status-left "#[bg=default,fg=#{@thm_bright_red}]  #{pane_current_command} "
       set -ga status-left "#[bg=default,fg=#{@thm_overlay_0},none]│"
       set -ga status-left "#[bg=default,fg=#{@thm_blue}]  #{=/-32/...:#{s|$USER|~|:#{b:pane_current_path}}} "
       set -ga status-left "#[bg=default,fg=#{@thm_overlay_0},none]#{?window_zoomed_flag,│,}"
@@ -65,9 +74,9 @@
 
       set -g status-right-length 100
       set -g status-right ""
-      set -ga status-right "#{?#{e|>=:10,#{battery_percentage}},#{#[bg=#{@thm_red},fg=#{@thm_bg}]},#{#[bg=default,fg=#{@thm_pink}]}} #{battery_icon} #{battery_percentage} "
+      set -ga status-right "#{?#{e|>=:10,#{battery_percentage}},#{#[bg=#{@thm_red},fg=#{@thm_bg}]},#{#[bg=default,fg=#{@thm_bright_magenta}]}} #{battery_icon} #{battery_percentage} "
       set -ga status-right "#[bg=default,fg=#{@thm_overlay_0}, none]│"
-      set -ga status-right "#[bg=default]#{?#{==:#{online_status},ok},#[fg=#{@thm_mauve}] 󰖩 on ,#[fg=#{@thm_red},bold]#[reverse] 󰖪 off }"
+      set -ga status-right "#[bg=default]#{?#{==:#{online_status},ok},#[fg=#{@thm_magenta}] 󰖩 on ,#[fg=#{@thm_red},bold]#[reverse] 󰖪 off }"
       set -ga status-right "#[bg=default,fg=#{@thm_overlay_0}, none]│"
       set -ga status-right "#[bg=default,fg=#{@thm_blue}] 󰭦 %Y-%m-%d 󰅐 %H:%M "
 
@@ -85,14 +94,14 @@
       set -g automatic-rename-format "Window"
 
       set -g window-status-format " #I#{?#{!=:#{window_name},Window},: #W,} "
-      set -g window-status-style "bg=default,fg=#{@thm_rosewater}"
-      set -g window-status-last-style "bg=default,fg=#{@thm_peach}"
+      set -g window-status-style "bg=default,fg=#{@thm_cyan}"
+      set -g window-status-last-style "bg=default,fg=#{@thm_bright_yellow}"
       set -g window-status-activity-style "bg=#{@thm_red},fg=#{@thm_bg}"
       set -g window-status-bell-style "bg=#{@thm_red},fg=#{@thm_bg},bold"
       set -gF window-status-separator "#[bg=default,fg=#{@thm_overlay_0}]│"
 
       set -g window-status-current-format " #I#{?#{!=:#{window_name},Window},: #W,} "
-      set -g window-status-current-style "bg=#{@thm_peach},fg=#{@thm_bg},bold"
+      set -g window-status-current-style "bg=#{@thm_bright_yellow},fg=#{@thm_bg},bold"
 
       set -g @resurrect-capture-pane-contents 'on'
       set -g @resurrect-strategy-nvim 'session'

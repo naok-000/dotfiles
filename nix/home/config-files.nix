@@ -4,7 +4,11 @@
   lib,
   dotfilesRoot,
   ...
-}: {
+}: let
+  theme = import ../theme/modus-operandi-tinted.nix;
+  deltaGitconfig = import ../theme/delta-gitconfig.nix {inherit theme;};
+  aerospaceBorders = import ../theme/aerospace-borders.nix {inherit lib theme;};
+in {
   xdg.configFile =
     {
       "awsume/config.yaml".source = dotfilesRoot + /awsume/config.yaml;
@@ -16,12 +20,16 @@
       "wezterm".source = dotfilesRoot + /wezterm;
     }
     // lib.optionalAttrs pkgs.stdenv.isDarwin {
+      "aerospace/borders.sh" = {
+        text = aerospaceBorders;
+        executable = true;
+      };
       "karabiner/karabiner.json".source = dotfilesRoot + /karabiner/karabiner.json;
     };
 
   home.file =
     {
-      ".gitconfig.d/catppuccin.gitconfig".source = dotfilesRoot + /git/catppuccin.gitconfig;
+      ".gitconfig.d/modus-operandi-tinted.gitconfig".text = deltaGitconfig;
       ".npmrc".source = dotfilesRoot + /npm/npmrc;
     }
     // lib.optionalAttrs pkgs.stdenv.isDarwin {

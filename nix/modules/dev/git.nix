@@ -32,7 +32,7 @@
     };
     includes = [
       {
-        path = "${config.home.homeDirectory}/.gitconfig.d/catppuccin.gitconfig";
+        path = "${config.home.homeDirectory}/.gitconfig.d/modus-operandi-tinted.gitconfig";
       }
     ];
     signing = {

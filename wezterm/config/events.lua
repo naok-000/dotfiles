@@ -4,13 +4,13 @@ local M = {}
 local window_modes = {}
 
 local function push_segment(palette, cells, background, foreground, text)
-	table.insert(cells, { Background = { Color = palette.bg } })
+	table.insert(cells, { Background = { Color = palette.tab_bar } })
 	table.insert(cells, { Foreground = { Color = background } })
 	table.insert(cells, { Text = "" })
 	table.insert(cells, { Background = { Color = background } })
 	table.insert(cells, { Foreground = { Color = foreground } })
 	table.insert(cells, { Text = text })
-	table.insert(cells, { Background = { Color = palette.bg } })
+	table.insert(cells, { Background = { Color = palette.tab_bar } })
 	table.insert(cells, { Foreground = { Color = background } })
 	table.insert(cells, { Text = "" })
 end
@@ -21,8 +21,8 @@ function M.apply(_, palette)
 		local foreground = palette.subtext
 
 		if tab.is_active then
-			background = palette.accent
-			foreground = palette.bg
+			background = palette.active_tab
+			foreground = palette.active_tab_text
 		elseif hover then
 			background = palette.surface_hover
 			foreground = palette.text
@@ -36,13 +36,13 @@ function M.apply(_, palette)
 		end
 
 		return {
-			{ Background = { Color = palette.bg } },
+			{ Background = { Color = palette.tab_bar } },
 			{ Foreground = { Color = background } },
 			{ Text = "" },
 			{ Background = { Color = background } },
 			{ Foreground = { Color = foreground } },
 			{ Text = title },
-			{ Background = { Color = palette.bg } },
+			{ Background = { Color = palette.tab_bar } },
 			{ Foreground = { Color = background } },
 			{ Text = "" },
 		}

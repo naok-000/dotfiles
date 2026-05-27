@@ -2,7 +2,7 @@
   programs.bat = {
     enable = true;
     config = {
-      theme = "Catppuccin Mocha";
+      theme = "ansi";
     };
   };
 }
