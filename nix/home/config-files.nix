@@ -36,6 +36,7 @@ in {
     }
     // lib.optionalAttrs pkgs.stdenv.isDarwin {
       ".aerospace.toml".source = dotfilesRoot + /aerospace/aerospace.toml;
+      ".local/bin/emacs".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Applications/Home Manager Apps/Emacs.app/Contents/MacOS/Emacs";
     };
 
   home.activation.dockerConfig =
