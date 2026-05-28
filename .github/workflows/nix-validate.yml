@@ -25,6 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NIX_CONFIG: accept-flake-config = true
+      NIX_CURL_FLAGS: -A dotfiles-github-actions
     steps:
       - uses: actions/checkout@v6
       - uses: DeterminateSystems/determinate-nix-action@v3
