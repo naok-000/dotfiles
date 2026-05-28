@@ -7,7 +7,7 @@ function M.apply(config)
 	config.font = wezterm.font_with_fallback({
 		"UDEV Gothic 35NFLG",
 		"HackGen Console NF",
-    "PlemolJP35 Console NF",
+		"PlemolJP35 Console NF",
 		"JetBrainsMono Nerd Font Mono",
 		"Noto Color Emoji",
 		"Symbols Nerd Font Mono",
@@ -17,6 +17,13 @@ function M.apply(config)
 
 	config.window_background_opacity = 1.0
 	config.macos_window_background_blur = 0
+	config.window_padding = {
+		-- 	left = 1,
+		-- 	right = 1,
+		-- top = 0.5cell,
+		bottom = 0
+	}
+	config.use_resize_increments = true
 	config.default_cursor_style = "SteadyBar"
 	config.inactive_pane_hsb = {
 		saturation = 0.92,

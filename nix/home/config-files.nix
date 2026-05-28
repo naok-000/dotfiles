@@ -3,6 +3,7 @@
   pkgs,
   lib,
   dotfilesRoot,
+  dotfilesMutableRoot,
   ...
 }: let
   theme = import ../theme/modus-operandi-tinted.nix;
@@ -24,12 +25,14 @@ in {
         text = aerospaceBorders;
         executable = true;
       };
-      "karabiner/karabiner.json".source = dotfilesRoot + /karabiner/karabiner.json;
+      "karabiner".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesMutableRoot}/karabiner";
     };
 
   home.file =
     {
       ".gitconfig.d/modus-operandi-tinted.gitconfig".text = deltaGitconfig;
+      ".emacs.d".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesMutableRoot}/emacs";
+      ".local/share/skk".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesMutableRoot}/skk";
       ".npmrc".source = dotfilesRoot + /npm/npmrc;
     }
     // lib.optionalAttrs pkgs.stdenv.isDarwin {

@@ -88,6 +88,7 @@
     llm-agents.codex
     mo
     poppler-utils
+    pandoc
     wezterm
   ];
 
