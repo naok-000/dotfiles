@@ -245,7 +245,20 @@ If the new path's directories does not exist, create them."
 
 (setq gc-cons-threshold (or bedrock--initial-gc-threshold 800000))
 
+;; exec-path-from-shell to read login shell's PATH. e.g. /etc/profiles/per-user/...
+(use-package exec-path-from-shell
+  :ensure
+  t
+  :if (memq window-system '(mac ns x pgtk))
+  :config
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-envs '("SKK_USER_DICTIONARY" "SKK_GLOBAL_DICTIONARIES")))
+
 ;; DDSKK
+(defvar my/skk-global-dictionaries
+  (mapcar (lambda (path) (cons path 'euc-jp))
+          (split-string (or (getenv "SKK_GLOBAL_DICTIONARIES") "") path-separator t)))
+
 (use-package ddskk
   :ensure
   t
@@ -253,6 +266,10 @@ If the new path's directories does not exist, create them."
   :custom
   (default-input-method "japanese-skk")
   (skk-user-directory "~/.local/share/skk")
+  (skk-jisyo (getenv "SKK_USER_DICTIONARY"))
+  (skk-jisyo-code 'utf-8)
+  (skk-large-jisyo (car my/skk-global-dictionaries))
+  (skk-extra-jisyo-file-list (cdr my/skk-global-dictionaries))
   (skk-save-jisyo-instantly t))
 
 ;; Font
@@ -285,14 +302,6 @@ If the new path's directories does not exist, create them."
 (use-package consult
   :ensure
   t)
-
-;; exec-path-from-shell to read login shell's PATH. e.g. /etc/profiles/per-user/...
-(use-package exec-path-from-shell
-  :ensure
-  t
-  :if (memq window-system '(mac ns x pgtk))
-  :config
-  (exec-path-from-shell-initialize))
 
 (use-package vertico
   :ensure

@@ -1,6 +1,9 @@
 /.DS_Store
+/dictionaries/
 /jisyo.bak
 /rank.json
 /record
+/skk-jisyo.utf8
+/skk-jisyo.utf8.backup
 *~
 \#*\#

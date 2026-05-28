@@ -32,7 +32,6 @@ in {
     {
       ".gitconfig.d/modus-operandi-tinted.gitconfig".text = deltaGitconfig;
       ".emacs.d".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesMutableRoot}/emacs";
-      ".local/share/skk".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesMutableRoot}/skk";
       ".npmrc".source = dotfilesRoot + /npm/npmrc;
     }
     // lib.optionalAttrs pkgs.stdenv.isDarwin {

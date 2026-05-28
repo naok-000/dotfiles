@@ -3,76 +3,10 @@ return {
 		"vim-skk/skkeleton",
 		dependencies = { "vim-denops/denops.vim" },
 		config = function()
-			local is_darwin = (vim.uv or vim.loop).os_uname().sysname == "Darwin"
-			local global_dictionaries
-
-			if is_darwin then
-				-- skkeleton keeps earlier dictionary candidates ahead of later ones.
-				global_dictionaries = {
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.L"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.itaiji"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.itaiji.JIS3_4"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.JIS2"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.JIS2004"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.JIS3_4"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.law"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.mazegaki"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.geo"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.station"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.zipcode"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.office.zipcode"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.china_taiwan"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.okinawa"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.edict"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.propernoun"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.jinmei"
-					),
-					vim.fn.expand(
-						"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/SKK-JISYO.fullname"
-					),
-				}
-			else
-				global_dictionaries = {
-					vim.fn.expand("~/.local/share/skk/SKK-JISYO.L"),
-					vim.fn.expand("~/.local/share/skk/SKK-JISYO.geo"),
-					vim.fn.expand("~/.local/share/skk/SKK-JISYO.law"),
-					vim.fn.expand("~/.local/share/skk/SKK-JISYO.propernoun"),
-					vim.fn.expand("~/.local/share/skk/SKK-JISYO.jinmei"),
-				}
-			end
+			local global_dictionaries = vim.split(vim.env.SKK_GLOBAL_DICTIONARIES or "", ":", {
+				plain = true,
+				trimempty = true,
+			})
 
 			local skkeleton_config = {
 				globalDictionaries = global_dictionaries,
@@ -80,12 +14,8 @@ return {
 				eggLikeNewline = true,
 				markerHenkan = "",
 				markerHenkanSelect = "",
+				userDictionary = vim.env.SKK_USER_DICTIONARY,
 			}
-			if is_darwin then
-				skkeleton_config.userDictionary = vim.fn.expand(
-					"~/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/skk-jisyo.utf8"
-				)
-			end
 
 			vim.fn["skkeleton#config"](skkeleton_config)
 

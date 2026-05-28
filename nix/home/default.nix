@@ -12,6 +12,7 @@
     ../modules/shell/direnv.nix
     ../modules/dev/git.nix
     ../modules/dev/nvim.nix
+    ../modules/dev/skk.nix
   ];
 
   home.stateVersion = "25.11";
