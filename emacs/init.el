@@ -32,7 +32,7 @@
 
 (setq package-selected-packages
       '(adaptive-wrap consult-ghq ddskk exec-path-from-shell org-modern
-		      vertico))
+		      markdown-mode vertico))
 
 ;; If you want to turn off the welcome screen, uncomment this
 					;(setopt inhibit-splash-screen t)
@@ -273,9 +273,11 @@ If the new path's directories does not exist, create them."
   (skk-save-jisyo-instantly t))
 
 ;; Font
-;; (defvar my/font-family "Hackgen Console NF")
-(defvar my/font-family "Sarasa Term J")
-(defvar my/font-height 160)
+;;(defvar my/font-family "UDEV Gothic 35NFLG")
+(defvar my/font-family "Hackgen Console NF")
+;;(defvar my/font-family "Sarasa Term J")
+;;(defvar my/font-family "PlemolJP35 Console NF")
+(defvar my/font-height 200)
 (defvar my/font-weight 'regular)
 
 (set-face-attribute 'default nil
@@ -308,6 +310,14 @@ If the new path's directories does not exist, create them."
   t
   :init
   (vertico-mode))
+
+;; markdown-mode
+(use-package markdown-mode
+  :ensure
+  t
+  :mode ("\\.md\\'" . markdown-mode)
+  :hook
+  (markdown-mode . visual-line-mode))
 
 (defun my/ghq-dired ()
   "ghq のリポジトリを選んで，ルートを Dired で開く．"

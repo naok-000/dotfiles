@@ -41,9 +41,19 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- move by display line when no count
+vim.keymap.set({ "n", "v" }, "j", function()
+  return vim.v.count == 0 and "gj" or "j"
+end, { expr = true, silent = true })
+
+vim.keymap.set({ "n", "v" }, "k", function()
+  return vim.v.count == 0 and "gk" or "k"
+end, { expr = true, silent = true })
+
 -- cursor line, column
 vim.opt.cursorline = true
 vim.opt.cursorcolumn = true
 
 -- auto read file when changed outside
 vim.opt.autoread = true
+
