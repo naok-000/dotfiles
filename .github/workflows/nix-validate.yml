@@ -25,21 +25,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NIX_CONFIG: accept-flake-config = true
-      NIX_CURL_FLAGS: -A dotfiles-github-actions
     steps:
       - uses: actions/checkout@v6
       - uses: DeterminateSystems/determinate-nix-action@v3
         with:
           github-token: ${{ github.token }}
-      - name: Configure crates.io user agent
-        run: |
-          sudo mkdir -p /etc/systemd/system/nix-daemon.service.d
-          printf '%s\n' \
-            '[Service]' \
-            'Environment="NIX_CURL_FLAGS=-A dotfiles-github-actions"' \
-            | sudo tee /etc/systemd/system/nix-daemon.service.d/crates-io-user-agent.conf
-          sudo systemctl daemon-reload
-          sudo systemctl restart nix-daemon.service
       - name: Build czg package
         run: nix build .#packages.x86_64-linux.czg
       - name: Build mo package
