@@ -1,4 +1,3 @@
-;;; ashton314/emacs-bedrock
 ;;; Minimal init.el
 
 ;;; Contents:
@@ -32,7 +31,7 @@
 
 (setq package-selected-packages
       '(adaptive-wrap consult-ghq ddskk exec-path-from-shell org-modern
-		      markdown-mode vertico))
+		      markdown-mode mixed-pitch vertico))
 
 ;; If you want to turn off the welcome screen, uncomment this
 					;(setopt inhibit-splash-screen t)
@@ -245,6 +244,35 @@ If the new path's directories does not exist, create them."
 
 (setq gc-cons-threshold (or bedrock--initial-gc-threshold 800000))
 
+;; Font
+;;(defvar my/font-family "UDEV Gothic 35NFLG")
+;;(defvar my/fixed-pitch-font-family "Hackgen Console NF")
+;;(defvar my/font-family "Sarasa Term J")
+;;(defvar my/font-family "PlemolJP35 Console NF")
+(setq my/fixed-pitch-font-family "Hackgen Console NF"
+      my/variable-pitch-font-family "Hiragino Sans"
+      my/font-height 200
+      my/font-weight 'regular)
+
+(set-face-attribute 'default nil
+                    :family my/fixed-pitch-font-family
+                    :height my/font-height
+                    :weight my/font-weight)
+
+(set-face-attribute 'fixed-pitch nil
+                    :family my/fixed-pitch-font-family
+                    :height my/font-height
+                    :weight my/font-weight)
+
+(set-face-attribute 'variable-pitch nil
+                    :family my/variable-pitch-font-family
+                    :height my/font-height
+                    :weight my/font-weight)
+
+;; Prefer Japanese glyphs over Chinese fallback
+(set-language-environment "Japanese")
+(prefer-coding-system 'utf-8)
+
 ;; exec-path-from-shell to read login shell's PATH. e.g. /etc/profiles/per-user/...
 (use-package exec-path-from-shell
   :ensure
@@ -271,34 +299,6 @@ If the new path's directories does not exist, create them."
   (skk-large-jisyo (car my/skk-global-dictionaries))
   (skk-extra-jisyo-file-list (cdr my/skk-global-dictionaries))
   (skk-save-jisyo-instantly t))
-
-;; Font
-;;(defvar my/font-family "UDEV Gothic 35NFLG")
-(defvar my/font-family "Hackgen Console NF")
-;;(defvar my/font-family "Sarasa Term J")
-;;(defvar my/font-family "PlemolJP35 Console NF")
-(defvar my/font-height 200)
-(defvar my/font-weight 'regular)
-
-(set-face-attribute 'default nil
-                    :family my/font-family
-                    :height my/font-height
-                    :weight my/font-weight)
-
-(set-fontset-font t 'japanese-jisx0208
-                  (font-spec :family my/font-family :weight
-			     my/font-weight))
-(set-fontset-font t 'japanese-jisx0212
-                  (font-spec :family my/font-family :weight
-			     my/font-weight))
-(set-fontset-font t 'katakana-jisx0201
-                  (font-spec :family my/font-family :weight
-			     my/font-weight))
-
-(set-fontset-font t 'unicode
-                  (font-spec :family my/font-family :weight
-			     my/font-weight)
-                  nil 'prepend)
 
 ;; consult
 (use-package consult
@@ -340,6 +340,12 @@ If the new path's directories does not exist, create them."
   (org-src-tab-acts-natively t)
   (org-src-fontify-natively t)
   (org-edit-src-content-indentation 2))
+
+(use-package mixed-pitch
+  :ensure
+  t
+  :hook
+  (org-mode . mixed-pitch-mode))
 
 (custom-set-faces
  '(org-document-title ((t (:height 1.5 :weight bold))))

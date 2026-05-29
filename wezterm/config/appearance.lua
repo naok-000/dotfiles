@@ -21,7 +21,7 @@ function M.apply(config)
 		-- 	left = 1,
 		-- 	right = 1,
 		-- top = 0.5cell,
-		bottom = 0
+		bottom = 0,
 	}
 	config.use_resize_increments = true
 	config.default_cursor_style = "SteadyBar"
