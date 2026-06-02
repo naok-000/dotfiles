@@ -31,23 +31,10 @@ in {
   home.file =
     {
       ".gitconfig.d/modus-operandi-tinted.gitconfig".text = deltaGitconfig;
-      ".emacs.d".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesMutableRoot}/emacs";
       ".npmrc".source = dotfilesRoot + /npm/npmrc;
     }
     // lib.optionalAttrs pkgs.stdenv.isDarwin {
       ".aerospace.toml".source = dotfilesRoot + /aerospace/aerospace.toml;
-      ".local/bin/emacs" = {
-        text = ''
-          #!/bin/sh
-          if ${pkgs.emacs}/bin/emacsclient -c -n "$@"; then
-            exit 0
-          fi
-
-          ${pkgs.emacs}/bin/emacs --daemon
-          exec ${pkgs.emacs}/bin/emacsclient -c -n "$@"
-        '';
-        executable = true;
-      };
     };
 
   home.activation.dockerConfig =

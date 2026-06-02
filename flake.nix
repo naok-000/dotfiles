@@ -16,6 +16,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    doomemacs = {
+      url = "github:doomemacs/doomemacs";
+      flake = false;
+    };
     llm-agents.url = "github:numtide/llm-agents.nix";
     markdown-formatter-ja.url = "github:naok-000/markdown-formatter-ja";
   };
@@ -26,6 +30,7 @@
     nixpkgs,
     neovim-nightly-overlay,
     home-manager,
+    doomemacs,
     llm-agents,
     markdown-formatter-ja,
     ...
@@ -95,7 +100,7 @@
       home-manager.useUserPackages = true;
       home-manager.backupFileExtension = "backup";
       home-manager.extraSpecialArgs = {
-        inherit dotfilesRoot dotfilesMutableRoot profileName githubSigningKey;
+        inherit doomemacs dotfilesRoot dotfilesMutableRoot profileName githubSigningKey;
       };
       home-manager.users.${username} =
         {
@@ -162,7 +167,7 @@
       home-manager.lib.homeManagerConfiguration {
         pkgs = mkPkgs system;
         extraSpecialArgs = {
-          inherit dotfilesRoot dotfilesMutableRoot profileName githubSigningKey;
+          inherit doomemacs dotfilesRoot dotfilesMutableRoot profileName githubSigningKey;
         };
         modules = [
           ./nix/home/default.nix

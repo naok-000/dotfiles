@@ -11,6 +11,7 @@
     ../modules/shell/fzf.nix
     ../modules/shell/direnv.nix
     ../modules/dev/git.nix
+    ../modules/dev/emacs.nix
     ../modules/dev/nvim.nix
     ../modules/dev/skk.nix
   ];

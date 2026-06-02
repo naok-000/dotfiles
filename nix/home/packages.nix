@@ -16,7 +16,6 @@
   shellPackages = with pkgs; [
     bottom
     coreutils
-    emacs
     eza
     fastfetch
     fd
