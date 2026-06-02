@@ -150,80 +150,86 @@ on-mode-changed = []
     cmd-alt-minus = 'resize smart -50'
     cmd-alt-equal = 'resize smart +50'
 
+    # See: https://nikitabobko.github.io/AeroSpace/commands#mode
+    alt-tab = 'mode workspace'
+    cmd-alt-shift-semicolon = 'mode service'
+
+# 'workspace' binding mode declaration.
+# Use alt-tab as a prefix for workspace operations.
+[mode.workspace.binding]
+    esc = 'mode main'
+
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-    cmd-alt-1 = 'workspace 1'
-    cmd-alt-2 = 'workspace 2'
-    cmd-alt-3 = 'workspace 3'
-    cmd-alt-4 = 'workspace 4'
-    cmd-alt-5 = 'workspace 5'
-    cmd-alt-6 = 'workspace 6'
-    cmd-alt-7 = 'workspace 7'
-    cmd-alt-8 = 'workspace 8'
-    cmd-alt-9 = 'workspace 9'
-    cmd-alt-0 = 'workspace 0'
-    cmd-alt-a = 'workspace A'
-    cmd-alt-b = ['exec-and-forget open /Applications/Zen.app', 'workspace B']
-    # cmd-alt-c = 'workspace C'
-    cmd-alt-d = ['exec-and-forget open /Applications/Discord.app', 'workspace M']
-    cmd-alt-e = ['exec-and-forget open ~/Applications/Home\ Manager\ Apps/Emacs.app', 'workspace E']
-    cmd-alt-f = 'exec-and-forget open /System/Library/CoreServices/Finder.app'
-    cmd-alt-g = 'workspace G'
-    cmd-alt-i = 'workspace I'
-    cmd-alt-m = ['exec-and-forget open /Applications/Slack.app', 'workspace M']
-    cmd-alt-n = 'workspace N'
-    cmd-alt-o = ['exec-and-forget open /Applications/Obsidian.app', 'workspace O']
-    cmd-alt-p = 'workspace P'
-    cmd-alt-q = 'workspace Q'
-    cmd-alt-r = 'reload-config'
-    cmd-alt-s = ['exec-and-forget open /Applications/Powerpoint.app', 'workspace S']
-    cmd-alt-t = ['exec-and-forget open /Applications/Microsoft\ Teams.app', 'workspace M']
-    cmd-alt-u = 'workspace U'
-    cmd-alt-v = ['exec-and-forget open /Applications/Visual\ Studio\ Code.app', 'workspace V']
-    cmd-alt-w = ['exec-and-forget open ~/Applications/Home\ Manager\ Apps/WezTerm.app', 'workspace W']
-    cmd-alt-x = 'workspace X'
-    cmd-alt-y = 'workspace Y'
-    cmd-alt-z = ['exec-and-forget open /Applications/Zotero.app', 'workspace Z']
+    alt-1 = ['workspace 1', 'mode main']
+    alt-2 = ['workspace 2', 'mode main']
+    alt-3 = ['workspace 3', 'mode main']
+    alt-4 = ['workspace 4', 'mode main']
+    alt-5 = ['workspace 5', 'mode main']
+    alt-6 = ['workspace 6', 'mode main']
+    alt-7 = ['workspace 7', 'mode main']
+    alt-8 = ['workspace 8', 'mode main']
+    alt-9 = ['workspace 9', 'mode main']
+    alt-0 = ['workspace 0', 'mode main']
+    alt-a = ['workspace A', 'mode main']
+    alt-b = ['exec-and-forget open /Applications/Zen.app', 'workspace B', 'mode main']
+    # alt-c = ['workspace C', 'mode main']
+    alt-d = ['exec-and-forget open /Applications/Discord.app', 'workspace M', 'mode main']
+    alt-e = ['exec-and-forget /bin/zsh -lc "exec emacs"', 'workspace E', 'mode main']
+    alt-f = ['exec-and-forget open /System/Library/CoreServices/Finder.app', 'mode main']
+    alt-g = ['workspace G', 'mode main']
+    alt-i = ['workspace I', 'mode main']
+    alt-m = ['exec-and-forget open /Applications/Slack.app', 'workspace M', 'mode main']
+    alt-n = ['workspace N', 'mode main']
+    alt-o = ['exec-and-forget open /Applications/Obsidian.app', 'workspace O', 'mode main']
+    alt-p = ['workspace P', 'mode main']
+    alt-q = ['workspace Q', 'mode main']
+    alt-s = ['exec-and-forget open /Applications/Powerpoint.app', 'workspace S', 'mode main']
+    alt-t = ['exec-and-forget open /Applications/Microsoft\ Teams.app', 'workspace M', 'mode main']
+    alt-u = ['workspace U', 'mode main']
+    alt-v = ['exec-and-forget open /Applications/Visual\ Studio\ Code.app', 'workspace V', 'mode main']
+    alt-w = ['exec-and-forget open ~/Applications/Home\ Manager\ Apps/WezTerm.app', 'workspace W', 'mode main']
+    alt-x = ['workspace X', 'mode main']
+    alt-y = ['workspace Y', 'mode main']
+    alt-z = ['exec-and-forget open /Applications/Zotero.app', 'workspace Z', 'mode main']
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-    cmd-alt-shift-1 = 'move-node-to-workspace 1'
-    cmd-alt-shift-2 = 'move-node-to-workspace 2'
-    cmd-alt-shift-3 = 'move-node-to-workspace 3'
-    cmd-alt-shift-4 = 'move-node-to-workspace 4'
-    cmd-alt-shift-5 = 'move-node-to-workspace 5'
-    cmd-alt-shift-6 = 'move-node-to-workspace 6'
-    cmd-alt-shift-7 = 'move-node-to-workspace 7'
-    cmd-alt-shift-8 = 'move-node-to-workspace 8'
-    cmd-alt-shift-9 = 'move-node-to-workspace 9'
-    cmd-alt-shift-a = 'move-node-to-workspace A'
-    cmd-alt-shift-b = 'move-node-to-workspace B'
-    # cmd-alt-shift-c = 'move-node-to-workspace C'
-    cmd-alt-shift-d = 'move-node-to-workspace D'
-    cmd-alt-shift-e = 'move-node-to-workspace E'
-    cmd-alt-shift-f = 'move-node-to-workspace F'
-    cmd-alt-shift-g = 'move-node-to-workspace G'
-    cmd-alt-shift-i = 'move-node-to-workspace I'
-    cmd-alt-shift-m = 'move-node-to-workspace M'
-    cmd-alt-shift-n = 'move-node-to-workspace N'
-    cmd-alt-shift-o = 'move-node-to-workspace O'
-    cmd-alt-shift-p = 'move-node-to-workspace P'
-    cmd-alt-shift-q = 'move-node-to-workspace Q'
-    cmd-alt-shift-r = 'move-node-to-workspace R'
-    cmd-alt-shift-s = 'move-node-to-workspace S'
-    cmd-alt-shift-t = 'move-node-to-workspace T'
-    cmd-alt-shift-u = 'move-node-to-workspace U'
-    cmd-alt-shift-v = 'move-node-to-workspace V'
-    cmd-alt-shift-w = 'move-node-to-workspace W'
-    cmd-alt-shift-x = 'move-node-to-workspace X'
-    cmd-alt-shift-y = 'move-node-to-workspace Y'
-    cmd-alt-shift-z = 'move-node-to-workspace Z'
+    alt-shift-1 = ['move-node-to-workspace 1', 'mode main']
+    alt-shift-2 = ['move-node-to-workspace 2', 'mode main']
+    alt-shift-3 = ['move-node-to-workspace 3', 'mode main']
+    alt-shift-4 = ['move-node-to-workspace 4', 'mode main']
+    alt-shift-5 = ['move-node-to-workspace 5', 'mode main']
+    alt-shift-6 = ['move-node-to-workspace 6', 'mode main']
+    alt-shift-7 = ['move-node-to-workspace 7', 'mode main']
+    alt-shift-8 = ['move-node-to-workspace 8', 'mode main']
+    alt-shift-9 = ['move-node-to-workspace 9', 'mode main']
+    alt-shift-0 = ['move-node-to-workspace 0', 'mode main']
+    alt-shift-a = ['move-node-to-workspace A', 'mode main']
+    alt-shift-b = ['move-node-to-workspace B', 'mode main']
+    # alt-shift-c = ['move-node-to-workspace C', 'mode main']
+    alt-shift-d = ['move-node-to-workspace D', 'mode main']
+    alt-shift-e = ['move-node-to-workspace E', 'mode main']
+    alt-shift-f = ['move-node-to-workspace F', 'mode main']
+    alt-shift-g = ['move-node-to-workspace G', 'mode main']
+    alt-shift-i = ['move-node-to-workspace I', 'mode main']
+    alt-shift-m = ['move-node-to-workspace M', 'mode main']
+    alt-shift-n = ['move-node-to-workspace N', 'mode main']
+    alt-shift-o = ['move-node-to-workspace O', 'mode main']
+    alt-shift-p = ['move-node-to-workspace P', 'mode main']
+    alt-shift-q = ['move-node-to-workspace Q', 'mode main']
+    alt-shift-r = ['move-node-to-workspace R', 'mode main']
+    alt-shift-s = ['move-node-to-workspace S', 'mode main']
+    alt-shift-t = ['move-node-to-workspace T', 'mode main']
+    alt-shift-u = ['move-node-to-workspace U', 'mode main']
+    alt-shift-v = ['move-node-to-workspace V', 'mode main']
+    alt-shift-w = ['move-node-to-workspace W', 'mode main']
+    alt-shift-x = ['move-node-to-workspace X', 'mode main']
+    alt-shift-y = ['move-node-to-workspace Y', 'mode main']
+    alt-shift-z = ['move-node-to-workspace Z', 'mode main']
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
-    cmd-alt-tab = 'workspace-back-and-forth'
+    alt-tab = ['workspace-back-and-forth', 'mode main']
     # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
-    cmd-alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
-
-    # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-    cmd-alt-shift-semicolon = 'mode service'
+    alt-shift-tab = ['move-workspace-to-monitor --wrap-around next', 'mode main']
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes

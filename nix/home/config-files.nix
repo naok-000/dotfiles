@@ -36,7 +36,18 @@ in {
     }
     // lib.optionalAttrs pkgs.stdenv.isDarwin {
       ".aerospace.toml".source = dotfilesRoot + /aerospace/aerospace.toml;
-      ".local/bin/emacs".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Applications/Home Manager Apps/Emacs.app/Contents/MacOS/Emacs";
+      ".local/bin/emacs" = {
+        text = ''
+          #!/bin/sh
+          if ${pkgs.emacs}/bin/emacsclient -c -n "$@"; then
+            exit 0
+          fi
+
+          ${pkgs.emacs}/bin/emacs --daemon
+          exec ${pkgs.emacs}/bin/emacsclient -c -n "$@"
+        '';
+        executable = true;
+      };
     };
 
   home.activation.dockerConfig =
