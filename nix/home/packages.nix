@@ -42,7 +42,9 @@
     ccache
     cmake
     gperf
+    libtool
     ninja
+    pkg-config
     tree-sitter
   ];
 
@@ -82,6 +84,7 @@
 
   appPackages = with pkgs; [
     bibtex-tidy
+    codex-acp
     hugo
     imagemagick
     llm-agents.codex

@@ -6,6 +6,20 @@
   ...
 }: let
   skkEnv = lib.filterAttrs (name: _: lib.hasPrefix "SKK_" name) config.home.sessionVariables;
+  glibtool = pkgs.runCommand "glibtool" {} ''
+    mkdir -p "$out/bin"
+    ln -s "${pkgs.libtool}/bin/libtool" "$out/bin/glibtool"
+    ln -s "${pkgs.libtool}/bin/libtoolize" "$out/bin/glibtoolize"
+  '';
+  vtermBuildTools = with pkgs; [
+    cmake
+    glibtool
+    git
+    gnumake
+    libtool
+    pkg-config
+  ];
+  vtermBuildToolsPath = lib.makeBinPath vtermBuildTools;
   appEnv =
     skkEnv
     // {
@@ -37,6 +51,7 @@
       makeBinaryWrapper "${pkgs.emacs}/Applications/Emacs.app/Contents/MacOS/Emacs" "$out/bin/emacs" \
         ${lib.escapeShellArgs wrapperEnvFlags} \
         --set EMACS "$out/bin/emacs" \
+        --prefix PATH : ${lib.escapeShellArg vtermBuildToolsPath} \
         --add-flag ${lib.escapeShellArg "--init-directory=${config.home.homeDirectory}/.emacs.d"}
 
       ln -s "${pkgs.emacs}/bin/emacsclient" "$out/bin/emacsclient"
@@ -45,6 +60,7 @@
         ${lib.escapeShellArgs wrapperEnvFlags} \
         --set EMACS "$out/bin/emacs" \
         --prefix PATH : "$out/bin" \
+        --prefix PATH : ${lib.escapeShellArg vtermBuildToolsPath} \
         --add-flag -c \
         --add-flag ${lib.escapeShellArg "exec ${pkgs.emacs}/bin/emacsclient -c -n --alternate-editor="}
 

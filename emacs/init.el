@@ -30,8 +30,8 @@
 	       '("melpa" . "https://melpa.org/packages/") t))
 
 (setq package-selected-packages
-      '(adaptive-wrap consult-ghq ddskk exec-path-from-shell org-modern
-		      markdown-mode mixed-pitch vertico))
+      '(adaptive-wrap agent-shell consult-ghq ddskk exec-path-from-shell
+		      org-modern markdown-mode mixed-pitch vertico vterm))
 
 ;; If you want to turn off the welcome screen, uncomment this
 					;(setopt inhibit-splash-screen t)
@@ -290,6 +290,8 @@ If the new path's directories does not exist, create them."
 (use-package ddskk
   :ensure
   t
+  :demand
+  t
   :bind (("C-x C-j" . skk-mode))
   :custom
   (default-input-method "japanese-skk")
@@ -298,7 +300,31 @@ If the new path's directories does not exist, create them."
   (skk-jisyo-code 'utf-8)
   (skk-large-jisyo (car my/skk-global-dictionaries))
   (skk-extra-jisyo-file-list (cdr my/skk-global-dictionaries))
-  (skk-save-jisyo-instantly t))
+  (skk-save-jisyo-instantly t)
+  :config
+  (defun my/enable-skk-mode ()
+    (unless (minibufferp)
+      (skk-mode 1)))
+  (my/enable-skk-mode)
+  (add-hook 'after-change-major-mode-hook #'my/enable-skk-mode))
+
+;; Terminal emulator
+(use-package vterm
+  :ensure
+  t
+  :commands (vterm))
+
+;; AI coding agent shell
+(use-package agent-shell
+  :ensure
+  t
+  :bind (("C-c A" . agent-shell)
+         ("C-c C-a" . agent-shell-openai-start-codex))
+  :custom
+  (agent-shell-openai-authentication
+   (agent-shell-openai-make-authentication :login t))
+  (agent-shell-openai-codex-environment
+   (agent-shell-make-environment-variables :inherit-env t)))
 
 ;; consult
 (use-package consult
