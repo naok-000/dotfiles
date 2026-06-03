@@ -1,9 +1,12 @@
 ;;; my-core.el --- Core Emacs defaults -*- lexical-binding: t -*-
 
-(with-eval-after-load 'package
-  (add-to-list 'package-archives
-               '("melpa" . "https://melpa.org/packages/")
-               t))
+(require 'package)
+
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/")
+             t)
+
+(package-initialize)
 
 (setq package-selected-packages
       '(adaptive-wrap agent-shell consult consult-ghq dashboard ddskk
