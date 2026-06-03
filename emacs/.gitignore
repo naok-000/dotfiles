@@ -6,6 +6,7 @@
 /emacs-backup/
 /eshell/
 /history
+/lisp/*.elc
 /projects
 /tutorial/
 /url/
