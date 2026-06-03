@@ -12,6 +12,7 @@
     DOOMLOCALDIR = doomLocalDir;
     DOOMPROFILELOADFILE = "${doomLocalDir}/profiles/load.el";
     EMACS = "${pkgs.emacs}/bin/emacs";
+    LIBTOOL = "${pkgs.libtool}/bin/libtool";
   };
   emacsClientApp = pkgs.stdenv.mkDerivation {
     pname = "emacs-client-app";
@@ -92,8 +93,10 @@
     if pkgs.stdenv.isDarwin
     then emacsClientApp
     else pkgs.emacs;
+  skkGuiEnv = lib.filterAttrs (name: _: lib.hasPrefix "SKK_" name) config.home.sessionVariables;
   guiEnv =
     doomEnv
+    // skkGuiEnv
     // {
       XDG_CONFIG_HOME = config.xdg.configHome;
       XDG_STATE_HOME = config.xdg.stateHome;
@@ -116,6 +119,7 @@ in {
   home.packages = [
     pkgs.findutils
     pkgs.gnutar
+    pkgs.libtool
     emacsPackage
   ];
 

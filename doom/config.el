@@ -36,7 +36,7 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 ;;(setq doom-theme 'doom-one)
-(setq doom-theme 'modus-operandi)
+(setq doom-theme 'modus-operandi-tinted)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -77,3 +77,23 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(setq default-input-method "japanese-skk")
+
+(when-let ((jisyo (getenv "SKK_USER_DICTIONARY")))
+  (setq skk-jisyo jisyo))
+(when-let* ((dictionaries (getenv "SKK_GLOBAL_DICTIONARIES"))
+            (files (split-string dictionaries ":" t)))
+  (setq skk-large-jisyo (car files)
+        skk-extra-jisyo-file-list (cdr files)))
+
+(defun naok/evil-insert-skk-latin-mode ()
+  (activate-input-method default-input-method)
+  (skk-latin-mode nil))
+
+(defun naok/evil-exit-skk-mode ()
+  (when (equal current-input-method default-input-method)
+    (deactivate-input-method)))
+
+(add-hook 'evil-insert-state-entry-hook #'naok/evil-insert-skk-latin-mode)
+(add-hook 'evil-insert-state-exit-hook #'naok/evil-exit-skk-mode)
