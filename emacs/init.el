@@ -323,8 +323,9 @@ If the new path's directories does not exist, create them."
   :custom
   (agent-shell-openai-authentication
    (agent-shell-openai-make-authentication :login t))
-  (agent-shell-openai-codex-environment
-   (agent-shell-make-environment-variables :inherit-env t)))
+  :config
+  (setopt agent-shell-openai-codex-environment
+          (agent-shell-make-environment-variables :inherit-env t)))
 
 ;; consult
 (use-package consult
