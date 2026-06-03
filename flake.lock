@@ -58,22 +58,6 @@
         "type": "github"
       }
     },
-    "doomemacs": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1780381069,
-        "narHash": "sha256-G99LItcaJWJMP9xHS8OMrzYQhbrDr/eZF0X7s65l9kk=",
-        "owner": "doomemacs",
-        "repo": "doomemacs",
-        "rev": "30f1bf1ef18e6b2add008e1333726c2362827571",
-        "type": "github"
-      },
-      "original": {
-        "owner": "doomemacs",
-        "repo": "doomemacs",
-        "type": "github"
-      }
-    },
     "fenix": {
       "inputs": {
         "nixpkgs": "nixpkgs_2",
@@ -413,7 +397,6 @@
     },
     "root": {
       "inputs": {
-        "doomemacs": "doomemacs",
         "home-manager": "home-manager",
         "llm-agents": "llm-agents",
         "markdown-formatter-ja": "markdown-formatter-ja",

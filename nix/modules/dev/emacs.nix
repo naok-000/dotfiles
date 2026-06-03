@@ -2,22 +2,12 @@
   config,
   lib,
   pkgs,
-  doomemacs,
   dotfilesMutableRoot,
   ...
 }: let
-  doomLocalDir = "${config.xdg.stateHome}/doom";
-  doomEnv = {
-    DOOMDIR = "${config.xdg.configHome}/doom";
-    DOOMLOCALDIR = doomLocalDir;
-    DOOMPROFILELOADFILE = "${doomLocalDir}/profiles/load.el";
-    EMACS = "${pkgs.emacs}/bin/emacs";
-    LIBTOOL = "${pkgs.libtool}/bin/libtool";
-  };
   skkEnv = lib.filterAttrs (name: _: lib.hasPrefix "SKK_" name) config.home.sessionVariables;
   appEnv =
-    doomEnv
-    // skkEnv
+    skkEnv
     // {
       XDG_CONFIG_HOME = config.xdg.configHome;
       XDG_STATE_HOME = config.xdg.stateHome;
@@ -47,7 +37,7 @@
       makeBinaryWrapper "${pkgs.emacs}/Applications/Emacs.app/Contents/MacOS/Emacs" "$out/bin/emacs" \
         ${lib.escapeShellArgs wrapperEnvFlags} \
         --set EMACS "$out/bin/emacs" \
-        --add-flag ${lib.escapeShellArg "--init-directory=${config.xdg.configHome}/emacs"}
+        --add-flag ${lib.escapeShellArg "--init-directory=${config.home.homeDirectory}/.emacs.d"}
 
       ln -s "${pkgs.emacs}/bin/emacsclient" "$out/bin/emacsclient"
 
@@ -66,21 +56,11 @@
     then emacsClientApp
     else pkgs.emacs;
 in {
-  xdg.configFile = {
-    "doom".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesMutableRoot}/doom";
-    "emacs".source = doomemacs;
+  home.file = {
+    ".emacs.d".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesMutableRoot}/emacs";
   };
 
   home.packages = [
-    pkgs.findutils
-    pkgs.gnutar
-    pkgs.libtool
     emacsPackage
   ];
-
-  home.sessionPath = [
-    "${config.xdg.configHome}/emacs/bin"
-  ];
-
-  home.sessionVariables = doomEnv;
 }
