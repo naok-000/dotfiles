@@ -30,7 +30,7 @@
 	       '("melpa" . "https://melpa.org/packages/") t))
 
 (setq package-selected-packages
-      '(adaptive-wrap agent-shell consult-ghq ddskk exec-path-from-shell
+      '(adaptive-wrap agent-shell consult-ghq dashboard ddskk exec-path-from-shell
 		      org-modern markdown-mode mixed-pitch vertico vterm))
 
 ;; If you want to turn off the welcome screen, uncomment this
@@ -49,6 +49,22 @@
 
 ;; Save history of minibuffer
 (savehist-mode)
+
+;; Save recently opened files for the entry screen.
+(use-package recentf
+  :ensure nil
+  :custom
+  (recentf-max-saved-items 200)
+  (recentf-max-menu-items 20)
+  (recentf-save-file
+   (expand-file-name "emacs/recentf" (or (getenv "XDG_STATE_HOME") "~/.local/state")))
+  :config
+  (let ((recentf-dir (file-name-directory recentf-save-file)))
+    (unless (file-directory-p recentf-dir)
+      (ignore-errors
+        (make-directory recentf-dir t)))
+    (when (file-directory-p recentf-dir)
+      (recentf-mode 1))))
 
 ;; Move through windows with Ctrl-<arrow keys>
 (windmove-default-keybindings 'control) ; You can use other modifiers here
@@ -301,9 +317,26 @@ If the new path's directories does not exist, create them."
   (skk-large-jisyo (car my/skk-global-dictionaries))
   (skk-extra-jisyo-file-list (cdr my/skk-global-dictionaries))
   (skk-save-jisyo-instantly t)
+  (skk-use-color-cursor t)
+  (skk-cursor-default-color "black")
+  (skk-cursor-hiragana-color "firebrick")
+  (skk-cursor-katakana-color "dark orange")
+  (skk-cursor-jisx0201-color "purple")
+  (skk-cursor-jisx0208-latin-color "goldenrod")
+  (skk-cursor-latin-color "gray35")
+  (skk-cursor-abbrev-color "royalblue")
   :config
+  (setopt skk-rom-kana-rule-list
+          (append '(("," nil "，")
+                    ("." nil "．")
+                    ("(" nil "（")
+                    (")" nil "）"))
+                  skk-rom-kana-rule-list))
+
   (defun my/enable-skk-mode ()
-    (unless (minibufferp)
+    (unless (or (minibufferp)
+                buffer-read-only
+                (derived-mode-p 'special-mode))
       (skk-mode 1)))
   (my/enable-skk-mode)
   (add-hook 'after-change-major-mode-hook #'my/enable-skk-mode))
@@ -356,6 +389,87 @@ If the new path's directories does not exist, create them."
     (dired repo)))
 
 (global-set-key (kbd "C-c g") #'my/ghq-dired)
+
+(defun my/find-recent-file ()
+  "Open a file from `recentf-list'."
+  (interactive)
+  (recentf-mode 1)
+  (if recentf-list
+      (find-file (completing-read "Recent file: " recentf-list nil t))
+    (call-interactively #'find-file)))
+
+(defun my/open-init-file ()
+  "Open this Emacs init file."
+  (interactive)
+  (find-file user-init-file))
+
+;; Project navigation
+(use-package project
+  :ensure nil
+  :bind
+  (("C-c p p" . project-switch-project)
+   ("C-c p a" . project-remember-projects-under)
+   ("C-c p f" . project-find-file)
+   ("C-c p s" . project-find-regexp)
+   ("C-c p d" . project-dired)
+   ("C-c p b" . project-switch-to-buffer)
+   ("C-c p e" . project-eshell)
+   ("C-c p c" . project-compile)
+   ("C-c p k" . project-kill-buffers)
+   ("C-c p g" . my/ghq-dired))
+  :custom
+  (project-switch-commands
+   '((project-find-file "Find file")
+     (project-find-regexp "Search")
+     (project-dired "Dired")
+     (project-eshell "Eshell")
+     (project-compile "Compile")
+     (project-switch-to-buffer "Buffer")
+     (project-kill-buffers "Kill buffers"))))
+
+;; Entry screen
+(setopt inhibit-startup-screen t)
+
+(use-package dashboard
+  :ensure t
+  :demand t
+  :bind (("C-c e" . dashboard-open)
+         :map dashboard-mode-map
+         ("p" . project-switch-project)
+         ("r" . my/find-recent-file)
+         ("g" . my/ghq-dired)
+         ("i" . my/open-init-file))
+  :custom
+  (dashboard-banner-logo-title "Emacs")
+  (dashboard-center-content t)
+  (dashboard-items '((projects . 5)
+                     (recents . 5)))
+  (dashboard-navigation-cycle t)
+  (dashboard-projects-backend 'project-el)
+  (dashboard-show-shortcuts t)
+  (dashboard-startup-banner 'official)
+  (dashboard-startupify-list '(dashboard-insert-banner
+                               dashboard-insert-newline
+                               dashboard-insert-banner-title
+                               dashboard-insert-newline
+                               dashboard-insert-navigator
+                               dashboard-insert-newline
+                               dashboard-insert-items
+                               dashboard-insert-newline
+                               dashboard-insert-footer))
+  :config
+  (setopt dashboard-navigator-buttons
+          `((("g" "ghq" "Open ghq repository"
+              (lambda (&rest _) (call-interactively #'my/ghq-dired)))
+             ("i" "init.el" "Open init.el"
+              (lambda (&rest _) (my/open-init-file))))))
+  (defun my/dashboard-open-for-client-frame ()
+    (when (display-graphic-p)
+      (dashboard-open)))
+  (with-eval-after-load 'server
+    (add-hook 'server-after-make-frame-hook #'my/dashboard-open-for-client-frame))
+  (dashboard-setup-startup-hook)
+  (setopt initial-buffer-choice #'dashboard-open))
 
 ;; org-mode
 (use-package org
