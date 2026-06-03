@@ -25,6 +25,22 @@ in {
         text = aerospaceBorders;
         executable = true;
       };
+      "aerospace/open-emacs.sh" = {
+        text = ''
+          #!/bin/sh
+          set -eu
+
+          emacs_window_id="$(${pkgs.aerospace}/bin/aerospace list-windows --monitor all --app-bundle-id org.gnu.Emacs --format '%{window-id}' | /usr/bin/head -n 1)"
+
+          if [ -n "$emacs_window_id" ]; then
+            exec ${pkgs.aerospace}/bin/aerospace focus --window-id "$emacs_window_id"
+          fi
+
+          open "$HOME/Applications/Home Manager Apps/Emacs.app"
+          exec ${pkgs.aerospace}/bin/aerospace workspace E
+        '';
+        executable = true;
+      };
       "karabiner".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesMutableRoot}/karabiner";
     };
 
