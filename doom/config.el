@@ -78,22 +78,36 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+; SKKの設定
+;; +bindingsで+default/newlineに上書きされているのでnilにしておく
+(map! :i "C-j" nil)
+
+;; insert modeのC-gはevil-escapeに上書きされるとSKKと相性が悪い
+(map! :i "C-g" nil)
+
+(map! :after evil-org
+      :map evil-org-mode-map
+      ;; lang/org/configでorg-down-elementに上書きされているのでnilにしておく
+      :i "C-j" (cmds! (org-at-table-p) #'org-table-next-row nil)
+      )
+
+(use-package! skk
+  :bind ("C-x C-j" . #'skk-mode)
+  :config
+  ;; input/japanese/config.elでaddされているhookを削除する
+  ;; （これだとC-gしたらSKKが終了してしまう）
+  (remove-hook 'doom-escape-hook #'skk-mode-exit)
+  :hook
+  ;; normalモードに入るときにSKKをlatin-modeにするにはこう
+  (evil-normal-state-entry-hook
+   . (lambda ()
+       (when (bound-and-true-p skk-mode)
+         (skk-latin-mode-on)))))
+         
+;; ついでにpackage.elでjapaneseを有効にするとpangu-spacingまで強制有効になるのはどうかと思う向きは
+(use-package! pangu-spacing
+  :config
+  ;; input/japanese/config.elでtext-mode-hookに挿入されているので削除する
+  (remove-hook 'text-mode-hook #'pangu-spacing-mode))
+
 (setq default-input-method "japanese-skk")
-
-(when-let ((jisyo (getenv "SKK_USER_DICTIONARY")))
-  (setq skk-jisyo jisyo))
-(when-let* ((dictionaries (getenv "SKK_GLOBAL_DICTIONARIES"))
-            (files (split-string dictionaries ":" t)))
-  (setq skk-large-jisyo (car files)
-        skk-extra-jisyo-file-list (cdr files)))
-
-(defun naok/evil-insert-skk-latin-mode ()
-  (activate-input-method default-input-method)
-  (skk-latin-mode nil))
-
-(defun naok/evil-exit-skk-mode ()
-  (when (equal current-input-method default-input-method)
-    (deactivate-input-method)))
-
-(add-hook 'evil-insert-state-entry-hook #'naok/evil-insert-skk-latin-mode)
-(add-hook 'evil-insert-state-exit-hook #'naok/evil-exit-skk-mode)
