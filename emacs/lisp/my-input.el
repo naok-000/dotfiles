@@ -26,14 +26,6 @@
   (skk-large-jisyo (car my/skk-global-dictionaries))
   (skk-extra-jisyo-file-list (cdr my/skk-global-dictionaries))
   (skk-save-jisyo-instantly t)
-  (skk-use-color-cursor t)
-  (skk-cursor-default-color "black")
-  (skk-cursor-hiragana-color "firebrick")
-  (skk-cursor-katakana-color "dark orange")
-  (skk-cursor-jisx0201-color "purple")
-  (skk-cursor-jisx0208-latin-color "goldenrod")
-  (skk-cursor-latin-color "gray35")
-  (skk-cursor-abbrev-color "royalblue")
   :config
   (setopt skk-rom-kana-rule-list
           (append '(("," nil "，")
@@ -47,7 +39,8 @@
     (unless (or (minibufferp)
                 buffer-read-only
                 (derived-mode-p 'special-mode))
-      (skk-mode 1)))
+      (skk-mode 1)
+      (skk-latin-mode-on)))
 
   (my/enable-skk-mode)
   (add-hook 'after-change-major-mode-hook #'my/enable-skk-mode))
