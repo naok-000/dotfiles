@@ -15,13 +15,6 @@
                      (my/org-file "Weekly/")))
     (make-directory dir t)))
 
-(defun my/org-setup-fonts ()
-  "Use the preferred variable-pitch font for Org prose."
-  (when (display-graphic-p)
-    (let ((family (my/org-prose-font-family)))
-      (face-remap-add-relative 'default :family family)
-      (face-remap-add-relative 'variable-pitch :family family))))
-
 (defun my/org-open-today ()
   "Open today's daily Org note."
   (interactive)
@@ -76,8 +69,7 @@
    ("C-c o w" . my/org-open-weekly))
   :hook
   ((org-mode . visual-line-mode)
-   (org-mode . org-indent-mode)
-   (org-mode . my/org-setup-fonts))
+   (org-mode . org-indent-mode))
   :custom
   (org-directory my/org-directory)
   (org-agenda-files (list (my/org-file "Inbox/")

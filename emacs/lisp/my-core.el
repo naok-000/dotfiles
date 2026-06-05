@@ -10,7 +10,7 @@
 
 (setq package-selected-packages
       '(adaptive-wrap agent-shell consult consult-ghq dashboard ddskk
-                      exec-path-from-shell markdown-mode mixed-pitch
+                      exec-path-from-shell fontaine markdown-mode mixed-pitch
                       org-appear org-fragtog org-modern vertico vterm
                       which-key))
 
