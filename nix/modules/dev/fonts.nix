@@ -12,5 +12,6 @@
     nerd-fonts.symbols-only
     plemoljp-nf
     sarasa-gothic
+    atkinson-hyperlegible
   ];
 }
