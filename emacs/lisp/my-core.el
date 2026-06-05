@@ -10,8 +10,9 @@
 
 (setq package-selected-packages
       '(adaptive-wrap agent-shell consult consult-ghq dashboard ddskk
-                      exec-path-from-shell markdown-mode mixed-pitch org-modern
-                      vertico vterm which-key))
+                      exec-path-from-shell markdown-mode mixed-pitch
+                      org-appear org-fragtog org-modern vertico vterm
+                      which-key))
 
 (setopt initial-major-mode 'fundamental-mode)
 (setopt display-time-default-load-average nil)

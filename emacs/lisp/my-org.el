@@ -15,6 +15,82 @@
                      (my/org-file "Weekly/")))
     (make-directory dir t)))
 
+(defconst my/org-latin-font-families
+  (if (eq system-type 'darwin)
+      '("Helvetica Neue" ".SF Compact" "SF Pro")
+    (list my/variable-pitch-font-family))
+  "Preferred Latin font families for Org prose.")
+
+(defconst my/org-symbol-font-families
+  (if (eq system-type 'darwin)
+      '("Apple Symbols" ".SF NS Rounded")
+    (list my/variable-pitch-font-family))
+  "Preferred symbol font families for Org prose.")
+
+(defface my/org-symbol
+  '((t nil))
+  "Face used for punctuation and symbols in Org prose.")
+
+(defconst my/org-ascii-symbol-regexp
+  "[!-/:-@\\[-`{-~]+"
+  "Regexp matching ASCII punctuation and symbols.")
+
+(defconst my/org-fixed-pitch-faces
+  '(fixed-pitch org-block org-code org-verbatim org-table org-formula)
+  "Faces that should keep the fixed-pitch font in Org buffers.")
+
+(defun my/org-face-includes-p (face targets)
+  "Return non-nil when FACE includes any face in TARGETS."
+  (cond
+   ((null face) nil)
+   ((symbolp face) (memq face targets))
+   ((listp face)
+    (catch 'found
+      (dolist (item face)
+        (when (my/org-face-includes-p item targets)
+          (throw 'found t)))))))
+
+(defun my/org-match-ascii-symbol (limit)
+  "Match ASCII symbols before LIMIT outside fixed-pitch Org faces."
+  (catch 'match
+    (while (re-search-forward my/org-ascii-symbol-regexp limit t)
+      (unless (my/org-face-includes-p
+               (get-text-property (match-beginning 0) 'face)
+               my/org-fixed-pitch-faces)
+        (throw 'match t)))))
+
+(defun my/org-first-available-font-family (&rest families)
+  "Return the first available font family from FAMILIES."
+  (catch 'family
+    (dolist (family families)
+      (when (find-font (font-spec :family family))
+        (throw 'family family)))))
+
+(defun my/org-preferred-latin-font-family ()
+  "Return the preferred Latin font family for Org prose."
+  (or (apply #'my/org-first-available-font-family my/org-latin-font-families)
+      (car my/org-latin-font-families)))
+
+(defun my/org-setup-fonts ()
+  "Use macOS-style Latin and symbol fonts for Org prose."
+  (when (display-graphic-p)
+    (let ((latin (my/org-preferred-latin-font-family)))
+      (face-remap-add-relative 'default :family latin)
+      (face-remap-add-relative 'variable-pitch :family latin))
+    (when-let ((symbol (apply #'my/org-first-available-font-family
+                              my/org-symbol-font-families)))
+      (face-remap-add-relative 'my/org-symbol :family symbol)
+      (font-lock-add-keywords nil '((my/org-match-ascii-symbol
+                                      (0 'my/org-symbol prepend)))
+                              'append)
+      (font-lock-flush)
+      (face-remap-add-relative 'org-modern-symbol :family symbol))))
+
+(defun my/org-symbol-font-family ()
+  "Return the preferred symbol font family for Org faces."
+  (or (apply #'my/org-first-available-font-family my/org-symbol-font-families)
+      my/fixed-pitch-font-family))
+
 (defun my/org-open-today ()
   "Open today's daily Org note."
   (interactive)
@@ -69,7 +145,8 @@
    ("C-c o w" . my/org-open-weekly))
   :hook
   ((org-mode . visual-line-mode)
-   (org-mode . org-indent-mode))
+   (org-mode . org-indent-mode)
+   (org-mode . my/org-setup-fonts))
   :custom
   (org-directory my/org-directory)
   (org-agenda-files (list (my/org-file "Inbox/")
@@ -104,29 +181,44 @@
 
 (use-package org-modern
   :ensure t
-  :after org
   :hook
   ((org-mode . org-modern-mode)
    (org-agenda-finalize . org-modern-agenda))
   :custom
   (org-modern-star 'replace)
+  (org-modern-tag t)
+  (org-modern-priority t)
+  (org-modern-todo t)
+  (org-modern-list '((?+ . "◦")
+                     (?- . "▪")
+                     (?* . "•")))
+
   (org-modern-hide-stars nil)
   (org-modern-table nil)
   (org-modern-block-name nil)
   (org-modern-block-fringe nil)
   (org-modern-keyword nil)
-  (org-modern-tag t)
-  (org-modern-priority t)
   (org-modern-progress nil)
   (org-modern-horizontal-rule nil)
   (org-modern-footnote nil)
   (org-modern-internal-target nil)
   (org-modern-radio-target nil)
-  (org-modern-todo t)
   (org-modern-timestamp nil)
   :config
   (set-face-attribute 'org-modern-symbol nil
-                      :family my/fixed-pitch-font-family))
+                      :family (my/org-symbol-font-family)))
+
+(use-package org-appear
+  :ensure t
+  :hook (org-mode . org-appear-mode)
+  :custom
+  (org-appear-autoemphasis t)
+  (org-appear-autolinks t)
+  (org-appear-autosubmarkers t))
+
+(use-package org-fragtog
+  :ensure t
+  :hook (org-mode . org-fragtog-mode))
 
 (use-package mixed-pitch
   :ensure t

@@ -7,6 +7,7 @@
 ;; Startup speed, annoyance suppression
 (setq bedrock--initial-gc-threshold gc-cons-threshold)
 (setq gc-cons-threshold 10000000)
+(setq load-prefer-newer t)
 
 ;; DDSKK emits noisy unresolved-function warnings during async native compilation.
 (add-to-list 'warning-suppress-types '(native-compiler))
