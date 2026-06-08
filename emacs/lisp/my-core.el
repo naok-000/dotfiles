@@ -30,7 +30,8 @@
       '(adaptive-wrap agent-shell consult consult-ghq dashboard ddskk
                       exec-path-from-shell fontaine markdown-mode mixed-pitch
                       magit marginalia no-littering orderless org-appear
-                      org-fragtog org-modern vertico vterm which-key))
+                      org-fragtog org-modern spacious-padding vertico vterm
+                      which-key))
 
 (use-package no-littering
   :ensure t

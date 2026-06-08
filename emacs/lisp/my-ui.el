@@ -32,35 +32,58 @@
   :custom-face
   (hl-line ((t (:inherit highlight :extend t)))))
 
-(when (display-graphic-p)
-  (setopt-default left-margin-width 1
-                  right-margin-width 1)
-  (set-fringe-mode '(8 . 8))
-  (modify-all-frames-parameters
-   '((internal-border-width . 12)
-     (right-divider-width . 12)))
+(use-package tab-bar
+  :ensure nil
+  :custom
+  (tab-bar-show 1)
+  (tab-bar-new-button-show nil)
+  (tab-bar-close-button-show nil)
+  (tab-bar-tab-hints nil)
+  (tab-bar-auto-width nil)
+  (tab-bar-format
+   '(tab-bar-format-tabs
+     tab-bar-separator
+     tab-bar-format-align-right
+     tab-bar-format-global))
+  :config
+  (tab-bar-mode 1)
+  (tab-bar-history-mode 1)
+  (set-face-attribute 'tab-bar nil
+                      :inherit 'default
+                      :box nil)
+  (set-face-attribute 'tab-bar-tab nil
+                      :inherit 'mode-line
+                      :box nil
+                      :weight 'semibold)
+  (set-face-attribute 'tab-bar-tab-inactive nil
+                      :inherit 'mode-line-inactive
+                      :box nil
+                      :weight 'regular))
 
-  (dolist (face '(window-divider
-                  window-divider-first-pixel
-                  window-divider-last-pixel))
-    (set-face-foreground face (face-attribute 'default :background)))
-
-  (set-face-background 'fringe (face-attribute 'default :background)))
-
-(setopt tab-bar-show 1
-        tab-bar-new-button-show nil
-        tab-bar-close-button-show nil
-        tab-bar-format '(tab-bar-format-tabs
-                         tab-bar-separator
-                         tab-bar-format-align-right
-                         tab-bar-format-global))
-
-(set-face-attribute 'mode-line nil
-                    :box nil
-                    :height 0.95)
-(set-face-attribute 'mode-line-inactive nil
-                    :box nil
-                    :height 0.95)
+(use-package spacious-padding
+  :ensure t
+  :custom
+  (spacious-padding-widths
+   '(:internal-border-width 20
+     :header-line-width 4
+     :mode-line-width 6
+     :tab-width 4
+     :right-divider-width 20
+     :scroll-bar-width 0
+     :fringe-width 8))
+  (spacious-padding-subtle-frame-lines
+   '(:mode-line-active shadow
+     :mode-line-inactive shadow))
+  :config
+  (spacious-padding-mode 1)
+  (set-face-attribute 'mode-line nil
+                      :box nil
+                      :height 0.95
+                      :weight 'regular)
+  (set-face-attribute 'mode-line-inactive nil
+                      :box nil
+                      :height 0.95
+                      :weight 'regular))
 
 (provide 'my-ui)
 
