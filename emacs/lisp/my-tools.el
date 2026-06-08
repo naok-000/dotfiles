@@ -2,7 +2,8 @@
 
 (use-package vterm
   :ensure t
-  :commands (vterm))
+  :commands (vterm)
+  :bind (("C-c v" . my/vterm-project)))
 
 (use-package agent-shell
   :ensure t
@@ -20,6 +21,19 @@
   :mode ("\\.md\\'" . markdown-mode)
   :hook
   (markdown-mode . visual-line-mode))
+
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status)))
+
+(defun my/vterm-project ()
+  "Open vterm in the current project root."
+  (interactive)
+  (let* ((project (project-current nil))
+         (default-directory (if project
+                                (project-root project)
+                              default-directory)))
+    (vterm)))
 
 (defun my/ghq-dired ()
   "ghq のリポジトリを選んで，ルートを Dired で開く．"

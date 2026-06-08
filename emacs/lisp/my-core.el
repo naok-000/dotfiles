@@ -11,7 +11,7 @@
 (setq package-selected-packages
       '(adaptive-wrap agent-shell consult consult-ghq dashboard ddskk
                       exec-path-from-shell fontaine markdown-mode mixed-pitch
-                      org-appear org-fragtog org-modern vertico vterm
+                      magit org-appear org-fragtog org-modern vertico vterm
                       which-key))
 
 (setopt initial-major-mode 'fundamental-mode)

@@ -91,8 +91,10 @@
   (org-catch-invisible-edits 'show-and-error)
   (org-special-ctrl-a/e t)
   (org-insert-heading-respect-content t)
-  (org-hide-emphasis-markers nil)
-  (org-pretty-entities nil)
+  (org-hide-emphasis-markers t)
+  (org-pretty-entities-include-sub-superscripts nil)
+  (org-use-sub-superscripts '{})
+  (org-pretty-entities t)
   (org-agenda-tags-column 0)
   (org-ellipsis "...")
   (org-startup-indented t)
@@ -108,15 +110,12 @@
   ((org-mode . org-modern-mode)
    (org-agenda-finalize . org-modern-agenda))
   :custom
-  (org-modern-star 'replace)
+  (org-modern-star nil)
   (org-modern-tag t)
   (org-modern-priority t)
   (org-modern-todo t)
-  (org-modern-list '((?+ . "◦")
-                     (?- . "▪")
-                     (?* . "•")))
 
-  (org-modern-hide-stars nil)
+  (org-modern-list nil)
   (org-modern-table nil)
   (org-modern-block-name nil)
   (org-modern-block-fringe nil)
@@ -145,16 +144,16 @@
   :hook
   (org-mode . mixed-pitch-mode))
 
-(custom-set-faces
- '(org-document-title ((t (:height 1.5 :weight bold))))
- '(org-level-1 ((t (:height 1.35 :weight bold))))
- '(org-level-2 ((t (:height 1.25 :weight bold))))
- '(org-level-3 ((t (:height 1.15 :weight bold))))
- '(org-level-4 ((t (:height 1.08 :weight bold))))
- '(org-block ((t (:inherit fixed-pitch))))
- '(org-code ((t (:inherit fixed-pitch))))
- '(org-verbatim ((t (:inherit fixed-pitch))))
- '(org-table ((t (:inherit fixed-pitch)))))
+;; (custom-set-faces
+;;  '(org-document-title ((t (:height 1.5 :weight bold))))
+;;  '(org-level-1 ((t (:height 1.35 :weight bold))))
+;;  '(org-level-2 ((t (:height 1.25 :weight bold))))
+;;  '(org-level-3 ((t (:height 1.15 :weight bold))))
+;;  '(org-level-4 ((t (:height 1.08 :weight bold))))
+;;  '(org-block ((t (:inherit fixed-pitch))))
+;;  '(org-code ((t (:inherit fixed-pitch))))
+;;  '(org-verbatim ((t (:inherit fixed-pitch))))
+;;  '(org-table ((t (:inherit fixed-pitch)))))
 
 (add-hook 'org-mode-hook
           (lambda ()

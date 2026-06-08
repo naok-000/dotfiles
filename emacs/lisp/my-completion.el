@@ -26,6 +26,17 @@
   :init
   (vertico-mode))
 
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode))
+
 (provide 'my-completion)
 
 ;;; my-completion.el ends here

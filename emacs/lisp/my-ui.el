@@ -21,15 +21,15 @@
 
 (add-hook 'text-mode-hook #'visual-line-mode)
 
-(dolist (hook '(text-mode-hook prog-mode-hook))
-  (add-hook hook #'hl-line-mode))
+(use-package hl-line
+  :ensure nil
+  :hook ((text-mode prog-mode) . hl-line-mode)
+  :custom-face
+  (hl-line ((t (:inherit highlight :extend t)))))
 
 (setopt tab-bar-show 1)
 (add-to-list 'tab-bar-format 'tab-bar-format-align-right 'append)
 (add-to-list 'tab-bar-format 'tab-bar-format-global 'append)
-(setopt display-time-format "%a %F %T")
-(setopt display-time-interval 1)
-(display-time-mode)
 
 (provide 'my-ui)
 
