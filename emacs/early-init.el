@@ -8,6 +8,15 @@
 (setq bedrock--initial-gc-threshold gc-cons-threshold)
 (setq gc-cons-threshold 10000000)
 (setq load-prefer-newer t)
+(setq package-enable-at-startup nil)
+(setq package-user-dir
+      (expand-file-name "emacs/elpa/"
+                        (or (getenv "XDG_DATA_HOME") "~/.local/share/")))
+
+(when (fboundp 'startup-redirect-eln-cache)
+  (startup-redirect-eln-cache
+   (expand-file-name "emacs/eln-cache/"
+                     (or (getenv "XDG_STATE_HOME") "~/.local/state/"))))
 
 ;; DDSKK emits noisy unresolved-function warnings during async native compilation.
 (add-to-list 'warning-suppress-types '(native-compiler))

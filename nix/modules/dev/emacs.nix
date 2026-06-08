@@ -24,6 +24,7 @@
     skkEnv
     // {
       XDG_CONFIG_HOME = config.xdg.configHome;
+      XDG_DATA_HOME = config.xdg.dataHome;
       XDG_STATE_HOME = config.xdg.stateHome;
     };
   wrapperEnvFlags = lib.concatLists (lib.mapAttrsToList (name: value: [

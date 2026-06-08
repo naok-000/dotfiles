@@ -5,11 +5,16 @@
 /elpa/
 /emacs-backup/
 /eshell/
+/etc/
 /history
 /lisp/*.elc
 /projects
+/tramp
+/transient/
 /tutorial/
 /url/
+/var/
 *~
 \#*\#
+.\#*
 /agent/

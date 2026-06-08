@@ -19,7 +19,6 @@
 (setq gc-cons-threshold (or bedrock--initial-gc-threshold 800000))
 
 ;; Keep Customize writes out of the Nix-managed init file.
-(setopt custom-file (locate-user-emacs-file "custom.el"))
 (load custom-file 'noerror)
 
 ;;; init.el ends here
