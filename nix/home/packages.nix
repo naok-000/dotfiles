@@ -57,7 +57,6 @@
     markdownlint-cli2
     nodejs
     textlint
-    pipx
     python3
     python314Packages.pylatexenc
     rustc
