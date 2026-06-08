@@ -95,6 +95,12 @@
   (org-pretty-entities-include-sub-superscripts nil)
   (org-use-sub-superscripts '{})
   (org-pretty-entities t)
+  (org-emphasis-alist '(("*" (:weight semibold))
+                        ("/" italic)
+                        ("_" underline)
+                        ("=" org-verbatim verbatim)
+                        ("~" org-code verbatim)
+                        ("+" (:strike-through t))))
   (org-agenda-tags-column 0)
   (org-ellipsis "...")
   (org-startup-indented t)
@@ -144,16 +150,15 @@
   :hook
   (org-mode . mixed-pitch-mode))
 
-;; (custom-set-faces
-;;  '(org-document-title ((t (:height 1.5 :weight bold))))
-;;  '(org-level-1 ((t (:height 1.35 :weight bold))))
-;;  '(org-level-2 ((t (:height 1.25 :weight bold))))
-;;  '(org-level-3 ((t (:height 1.15 :weight bold))))
-;;  '(org-level-4 ((t (:height 1.08 :weight bold))))
-;;  '(org-block ((t (:inherit fixed-pitch))))
-;;  '(org-code ((t (:inherit fixed-pitch))))
-;;  '(org-verbatim ((t (:inherit fixed-pitch))))
-;;  '(org-table ((t (:inherit fixed-pitch)))))
+(custom-set-faces
+ '(org-document-title ((t (:height 1.35 :weight semibold))))
+ '(org-level-1 ((t (:height 1.25 :weight semibold))))
+ '(org-level-2 ((t (:height 1.15 :weight semibold))))
+ '(org-level-3 ((t (:height 1.08 :weight semibold))))
+ '(org-block ((t (:inherit fixed-pitch))))
+ '(org-code ((t (:inherit fixed-pitch))))
+ '(org-verbatim ((t (:inherit fixed-pitch))))
+ '(org-table ((t (:inherit fixed-pitch)))))
 
 (add-hook 'org-mode-hook
           (lambda ()

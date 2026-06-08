@@ -8,8 +8,8 @@
 
 (require 'my-core)
 (require 'my-completion)
-(require 'my-ui)
 (require 'my-theme)
+(require 'my-ui)
 (require 'my-font)
 (require 'my-input)
 (require 'my-tools)
