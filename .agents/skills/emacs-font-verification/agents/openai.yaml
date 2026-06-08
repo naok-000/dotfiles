@@ -1,0 +1,4 @@
+interface:
+  display_name: "Emacs Font Verification"
+  short_description: "Verify actual GUI Emacs font rendering with emacsclient."
+  default_prompt: "Use this skill to verify which fonts Emacs actually renders for specific characters, faces, and Org buffers."
