@@ -121,7 +121,7 @@
   (org-modern-priority t)
   (org-modern-todo t)
 
-  (org-modern-list nil)
+ (org-modern-list nil)
   (org-modern-table nil)
   (org-modern-block-name nil)
   (org-modern-block-fringe nil)
@@ -162,7 +162,7 @@
 
 (add-hook 'org-mode-hook
           (lambda ()
-            (setq-local line-spacing 0.2)
+            (setq-local line-spacing nil)
             (setq-local truncate-lines nil)
             (setq-local word-wrap t)
             (setq-local word-wrap-by-category t)))
