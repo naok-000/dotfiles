@@ -1,6 +1,6 @@
 ;;; my-font.el --- Font and language settings -*- lexical-binding: t -*-
 
-(defconst my/japanese-variable-pitch-font "IBM Plex Sans JP"
+(defconst my/japanese-variable-pitch-font "Sarasa UI J"
   "Japanese font used with the variable-pitch Latin font.")
 
 (use-package fontaine
@@ -16,11 +16,11 @@
       :variable-pitch-height 1.05
       :line-spacing 0.15)
      (t
-      :default-family "PlemolJP Console NF"
+      :default-family "Sarasa Fixed J"
       :default-weight regular
-      :fixed-pitch-family "PlemolJP Console NF"
+      :fixed-pitch-family "Sarasa Fixed J"
       :fixed-pitch-height 1.0
-      :variable-pitch-family "IBM Plex Sans JP"
+      :variable-pitch-family "Sarasa UI J"
       :variable-pitch-height 1.0
       :bold-weight semibold
       :italic-slant italic)))

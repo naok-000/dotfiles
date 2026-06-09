@@ -162,7 +162,7 @@
 
 (add-hook 'org-mode-hook
           (lambda ()
-            (setq-local line-spacing nil)
+            (setq-local line-spacing 0.2)
             (setq-local truncate-lines nil)
             (setq-local word-wrap t)
             (setq-local word-wrap-by-category t)))
