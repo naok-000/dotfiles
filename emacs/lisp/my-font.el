@@ -20,7 +20,8 @@
       :default-weight regular
       :fixed-pitch-family "Sarasa Fixed J"
       :fixed-pitch-height 1.0
-      :variable-pitch-family "Sarasa UI J"
+;;      :variable-pitch-family "Sarasa UI J"
+      :variable-pitch-family "Sarasa Fixed J"
       :variable-pitch-height 1.0
       :bold-weight semibold
       :italic-slant italic)))

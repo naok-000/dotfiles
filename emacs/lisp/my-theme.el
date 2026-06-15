@@ -11,9 +11,9 @@
           modus-themes-variable-pitch-ui nil
           modus-themes-prompts '(bold)
           modus-themes-headings
-          '((1 . (variable-pitch 1.30))
-            (2 . (variable-pitch 1.20))
-            (3 . (variable-pitch 1.12))
+          '((1 . (variable-pitch 1.0))
+            (2 . (variable-pitch 1.0))
+            (3 . (variable-pitch 1.0))
             (agenda-date . (1.15))
             (agenda-structure . (variable-pitch light 1.20))
             (t . (1.0))))

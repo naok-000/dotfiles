@@ -26,7 +26,6 @@
     (when new-file
       (insert "#+title: " title "\n\n"
               "* Schedule\n\n"
-              "* Tasks\n\n"
               "* Notes\n"))))
 
 (defun my/org-open-weekly ()
@@ -106,7 +105,8 @@
   (org-startup-indented t)
   (org-src-tab-acts-natively t)
   (org-src-fontify-natively t)
-  (org-edit-src-content-indentation 2)
+  (org-src-preserve-indentation t)
+  (org-edit-src-content-indentation 0)
   :config
   (my/org-ensure-directories))
 
@@ -152,9 +152,9 @@
 
 (custom-set-faces
  '(org-document-title ((t (:height 1.35 :weight semibold))))
- '(org-level-1 ((t (:height 1.25 :weight semibold))))
- '(org-level-2 ((t (:height 1.15 :weight semibold))))
- '(org-level-3 ((t (:height 1.08 :weight semibold))))
+ '(org-level-1 ((t (:weight semibold))))
+ '(org-level-2 ((t (:weight semibold))))
+ '(org-level-3 ((t (:weight semibold))))
  '(org-block ((t (:inherit fixed-pitch))))
  '(org-code ((t (:inherit fixed-pitch))))
  '(org-verbatim ((t (:inherit fixed-pitch))))
