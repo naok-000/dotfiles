@@ -107,7 +107,17 @@
   (org-src-fontify-natively t)
   (org-src-preserve-indentation t)
   (org-edit-src-content-indentation 0)
+  (org-format-latex-header "\\documentclass{article}
+\\usepackage[usenames]{color}
+\\usepackage{amsmath}
+\\usepackage{amssymb}
+[NO-DEFAULT-PACKAGES]
+[NO-PACKAGES]
+\\pagestyle{empty}")
+  (org-preview-latex-default-process 'dvisvgm)
   :config
+  (setq org-format-latex-options
+        (plist-put org-format-latex-options :scale 1.7))
   (my/org-ensure-directories))
 
 (use-package org-modern
