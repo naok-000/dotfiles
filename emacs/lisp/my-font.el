@@ -8,11 +8,11 @@
   :custom
   (fontaine-presets
    '((regular
-      :default-height 190)
+      :default-height 160)
      (large
-      :default-height 210)
+      :default-height 180)
      (prose
-      :default-height 200
+      :default-height 170
       :variable-pitch-height 1.05
       :line-spacing 0.15)
      (t
