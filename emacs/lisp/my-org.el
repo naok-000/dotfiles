@@ -12,38 +12,67 @@
   "Create the personal Org directory layout when missing."
   (dolist (dir (list my/org-directory
                      (my/org-file "Daily/")
-                     (my/org-file "Weekly/")))
+                     (my/org-file "Archive/")
+                     (my/org-file "Archive/legacy/")))
     (make-directory dir t)))
 
-(defun my/org-open-today ()
-  "Open today's daily Org note."
-  (interactive)
-  (my/org-ensure-directories)
-  (let* ((title (format-time-string "%Y-%m-%d %a"))
-         (file (my/org-file (format-time-string "Daily/%Y-%m-%d.org")))
-         (new-file (not (file-exists-p file))))
-    (find-file file)
-    (when new-file
-      (insert "#+title: " title "\n\n"
-              "* Schedule\n\n"
-              "* Notes\n"))))
+(defun my/org-daily-file ()
+  "Return the yearly daily Org file."
+  (my/org-file (format-time-string "Daily/%Y.org")))
 
-(defun my/org-open-weekly ()
-  "Open this week's weekly Org note."
+(defun my/org-insert-daily-template ()
+  "Insert the daily execution template under the current datetree day."
+  (org-back-to-heading t)
+  (let ((end (save-excursion (org-end-of-subtree t t))))
+    (unless (save-excursion
+              (re-search-forward "^\\*+ 固定予定$" end t))
+      (org-end-of-subtree t t)
+      (unless (bolp)
+        (insert "\n"))
+      (insert "\n**** 固定予定\n"
+              "- Googleカレンダーを確認する\n\n"
+              "**** 可処分時間\n"
+              "- 自由時間: \n"
+              "- 今日入れる量: \n"
+              "- バッファ: \n\n"
+              "**** 今日の時間割\n"
+              "| 時間 | 内容 | 見積 | 実績 | 結果 |\n"
+              "|---+---+---+---+---|\n"
+              "|  |  |  |  |  |\n\n"
+              "**** 実行ログ\n"
+              "- \n\n"
+              "**** ズレ\n"
+              "- \n\n"
+              "**** 原因\n"
+              "- \n\n"
+              "**** 明日の修正\n"
+              "- \n")
+      t)))
+
+(defun my/org-open-today ()
+  "Open today's daily execution note in the yearly datetree."
   (interactive)
+  (require 'org-datetree)
   (my/org-ensure-directories)
-  (let* ((title (format-time-string "%G-W%V"))
-         (file (my/org-file (concat "Weekly/" title ".org")))
+  (let* ((file (my/org-daily-file))
          (new-file (not (file-exists-p file))))
     (find-file file)
     (when new-file
-      (insert "#+title: " title "\n\n"
-              "* Goals\n"
-              "** TODO \n\n"
-              "* Review\n"
-              "** Done\n\n"
-              "** Learned\n\n"
-              "** Next\n"))))
+      (insert "#+title: " (format-time-string "Daily %Y") "\n\n"))
+    (widen)
+    (goto-char (point-min))
+    (org-datetree-find-date-create (calendar-current-date))
+    (org-back-to-heading t)
+    (let ((day-heading (point-marker)))
+      (when (or (my/org-insert-daily-template) new-file)
+        (save-buffer))
+      (goto-char day-heading)
+      (org-narrow-to-subtree))))
+
+(defun my/org-open-weekly-review ()
+  "Open the weekly task review agenda."
+  (interactive)
+  (org-agenda nil "w"))
 
 (defun my/org-open-goals ()
   "Open the long and mid term goals Org file."
@@ -63,18 +92,19 @@
 (use-package org
   :bind
   (("C-c o a" . org-agenda)
+   ("C-c o c" . org-capture)
    ("C-c o g" . my/org-open-goals)
    ("C-c o t" . my/org-open-today)
-   ("C-c o w" . my/org-open-weekly))
+   ("C-c o w" . my/org-open-weekly-review))
   :hook
   ((org-mode . visual-line-mode)
    (org-mode . org-indent-mode))
   :custom
   (org-directory my/org-directory)
-  (org-agenda-files (list (my/org-file "Inbox/")
-                          (my/org-file "goals.org")
-                          (my/org-file "Daily/")
-                          (my/org-file "Weekly/")))
+  (org-agenda-files (list (my/org-file "inbox.org")
+                          (my/org-file "tasks.org")
+                          (my/org-file "projects.org")
+                          (my/org-file "goals.org")))
   (org-agenda-span 'day)
   (org-agenda-start-on-weekday nil)
   (org-agenda-use-time-grid t)
@@ -83,8 +113,18 @@
                           "......"
                           "----------------"))
   (org-agenda-current-time-string "now ----------------")
-  (org-todo-keywords '((sequence "TODO(t)" "DOING(s)" "WAITING(w@/!)" "|"
-                                 "DONE(d!)" "CANCELED(c@)")))
+  (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "DOING(g)" "WAITING(w@/!)" "|"
+                                 "DONE(d!)" "CANCELED(c@)")
+                       (sequence "PROJECT(p)" "|" "DONE(d!)" "CANCELED(c@)")))
+  (org-log-done 'time)
+  (org-log-into-drawer t)
+  (org-global-properties
+   '(("Effort_ALL" . "0:05 0:10 0:15 0:25 0:30 0:45 1:00 1:30 2:00 3:00")))
+  (org-columns-default-format
+   "%50ITEM(Task) %TODO %3PRIORITY %10Effort(Effort){:} %10CLOCKSUM(Clock) %TAGS")
+  (org-clock-into-drawer t)
+  (org-clock-out-remove-zero-time-clocks t)
+  (org-clock-persist t)
   (org-auto-align-tags nil)
   (org-tags-column 0)
   (org-catch-invisible-edits 'show-and-error)
@@ -116,8 +156,37 @@
 \\pagestyle{empty}")
   (org-preview-latex-default-process 'dvisvgm)
   :config
+  (require 'org-clock)
+  (org-clock-persistence-insinuate)
   (setq org-format-latex-options
         (plist-put org-format-latex-options :scale 1.7))
+  (setq org-capture-templates
+        `(("i" "Inbox" entry
+           (file+headline ,(my/org-file "inbox.org") "Inbox")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:EFFORT: 0:30\n:END:\n")
+          ("t" "Task" entry
+           (file ,(my/org-file "tasks.org"))
+           "* TODO %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:EFFORT: 0:30\n:END:\n")
+          ("p" "Project" entry
+           (file ,(my/org-file "projects.org"))
+           "* PROJECT %?\n:PROPERTIES:\n:CREATED: %U\n:AREA: \n:END:\n\n** NEXT \n:PROPERTIES:\n:EFFORT: 0:30\n:END:\n")))
+  (setq org-agenda-custom-commands
+        '(("d" "Daily dashboard"
+           ((agenda "" ((org-agenda-span 1)
+                        (org-agenda-start-day nil)))
+            (todo "NEXT")
+            (todo "DOING")
+            (todo "WAITING")))
+          ("w" "Weekly review"
+           ((todo "TODO")
+            (todo "NEXT")
+            (todo "DOING")
+            (todo "WAITING")
+            (todo "PROJECT")))))
+  (setq org-refile-targets
+        `((,(my/org-file "tasks.org") :maxlevel . 3)
+          (,(my/org-file "projects.org") :maxlevel . 3)
+          (,(my/org-file "goals.org") :maxlevel . 3)))
   (my/org-ensure-directories))
 
 (use-package org-modern

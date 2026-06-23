@@ -17,7 +17,6 @@
       "azookey"
       "jordanbaird-ice"
       "skim"
-      "time-out"
       "xquartz"
     ];
   };
