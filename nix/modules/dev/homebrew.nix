@@ -7,7 +7,11 @@
       cleanup = "none";
     };
     taps = [
+      "k1LoW/tap"
       "tcr/tcr"
+    ];
+    brews = [
+      "k1LoW/tap/mo"
     ];
     casks = [
       "azookey"

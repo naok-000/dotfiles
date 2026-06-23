@@ -87,7 +87,6 @@
     hugo
     imagemagick
     llm-agents.codex
-    mo
     poppler-utils
     pandoc
     wezterm
@@ -111,8 +110,13 @@
     docker-credential-helpers
     macskk
   ];
+
+  linuxOnlyPackages = with pkgs; [
+    mo
+  ];
 in {
   home.packages =
     packages
-    ++ lib.optionals pkgs.stdenv.isDarwin darwinOnlyPackages;
+    ++ lib.optionals pkgs.stdenv.isDarwin darwinOnlyPackages
+    ++ lib.optionals pkgs.stdenv.isLinux linuxOnlyPackages;
 }

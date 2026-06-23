@@ -13,6 +13,8 @@ in {
       "$HOME/.antigravity/antigravity/bin"
     ]
     ++ lib.optionals pkgs.stdenv.isDarwin [
+      "/opt/homebrew/bin"
+      "/opt/homebrew/sbin"
       "/Library/Frameworks/Python.framework/Versions/3.11/bin"
       "/Applications/WezTerm.app/Contents/MacOS"
     ];

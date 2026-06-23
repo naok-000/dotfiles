@@ -1,7 +1,6 @@
 {markdown-formatter-ja}: final: prev:
 {
   czg = final.callPackage ../pkgs/czg.nix {};
-  libtexprintf = final.callPackage ../pkgs/libtexprintf.nix {};
   markdown-formatter-ja = final.rustPlatform.buildRustPackage {
     pname = "markdown-formatter-ja";
     version = "0.1.0";

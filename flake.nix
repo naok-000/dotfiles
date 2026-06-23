@@ -196,13 +196,13 @@
       aarch64-darwin = let
         pkgs = mkPkgs "aarch64-darwin";
       in {
-        inherit (pkgs) czg libtexprintf mo;
+        inherit (pkgs) czg;
       };
 
       x86_64-linux = let
         pkgs = mkPkgs "x86_64-linux";
       in {
-        inherit (pkgs) czg libtexprintf mo;
+        inherit (pkgs) czg mo;
       };
     };
 
