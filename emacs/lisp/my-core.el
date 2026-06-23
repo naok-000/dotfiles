@@ -27,10 +27,10 @@
 (package-initialize)
 
 (setq package-selected-packages
-      '(adaptive-wrap agent-shell consult consult-ghq dashboard ddskk
+      '(adaptive-wrap agent-shell citar citar-org-roam consult consult-ghq dashboard ddskk
                       exec-path-from-shell fontaine markdown-mode mixed-pitch
                       magit marginalia no-littering orderless org-appear
-                      org-fragtog org-modern spacious-padding vertico vterm
+                      org-fragtog org-roam spacious-padding vertico vterm
                       which-key))
 
 (use-package no-littering

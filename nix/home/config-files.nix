@@ -33,11 +33,79 @@ in {
           emacs_window_id="$(${pkgs.aerospace}/bin/aerospace list-windows --monitor all --app-bundle-id org.gnu.Emacs --format '%{window-id}' | /usr/bin/head -n 1)"
 
           if [ -n "$emacs_window_id" ]; then
+            ${pkgs.aerospace}/bin/aerospace move-node-to-workspace --window-id "$emacs_window_id" E
+            ${pkgs.aerospace}/bin/aerospace workspace E
             exec ${pkgs.aerospace}/bin/aerospace focus --window-id "$emacs_window_id"
           fi
 
           open "$HOME/Applications/Home Manager Apps/Emacs.app"
           exec ${pkgs.aerospace}/bin/aerospace workspace E
+        '';
+        executable = true;
+      };
+      "aerospace/focus-app-here.sh" = {
+        text = ''
+          #!/bin/sh
+          set -eu
+
+          aerospace=${pkgs.aerospace}/bin/aerospace
+          profile="''${1:-}"
+
+          case "$profile" in
+            finder)
+              app_id=com.apple.finder
+              open_target=/System/Library/CoreServices/Finder.app
+              ;;
+            emacs)
+              app_id=org.gnu.Emacs
+              open_target="$HOME/Applications/Home Manager Apps/Emacs.app"
+              ;;
+            *)
+              printf '%s\n' "usage: $0 finder|emacs" >&2
+              exit 2
+              ;;
+          esac
+
+          window_id() {
+            "$aerospace" list-windows --monitor all --app-bundle-id "$app_id" --format '%{window-id}' | /usr/bin/head -n 1
+          }
+
+          focus_target_window() {
+            "$aerospace" focus --window-id "$target_window_id"
+            /usr/bin/osascript -e "tell application id \"$app_id\" to activate" >/dev/null 2>&1 || true
+          }
+
+          current_workspace="$("$aerospace" list-workspaces --focused | /usr/bin/head -n 1)"
+          [ -n "$current_workspace" ] || exit 1
+
+          target_window_id="$(window_id || true)"
+
+          if [ -z "$target_window_id" ]; then
+            open "$open_target"
+
+            for _ in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20; do
+              sleep 0.1
+              target_window_id="$(window_id || true)"
+              [ -n "$target_window_id" ] && break
+            done
+          fi
+
+          [ -n "$target_window_id" ] || exit 0
+
+          "$aerospace" move-node-to-workspace --focus-follows-window --window-id "$target_window_id" "$current_workspace"
+
+          case "$profile" in
+            finder)
+              "$aerospace" layout --window-id "$target_window_id" floating
+              ;;
+            emacs)
+              "$aerospace" layout --window-id "$target_window_id" tiling
+              "$aerospace" split --window-id "$target_window_id" horizontal
+              "$aerospace" move --window-id "$target_window_id" right || true
+              ;;
+          esac
+
+          focus_target_window
         '';
         executable = true;
       };

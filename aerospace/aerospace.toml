@@ -87,6 +87,7 @@ on-mode-changed = []
     9 = ['EV2780', 'secondary']
     0 = ['EV2780', 'secondary']
     B = ['EV2780', 'secondary'] # Browsers (Arc, Chrome, Dia)
+    C = 'main' # Codex
     E = 'main' # Entertainment (Spotify)
     M = ['EV2780', 'secondary'] # Message apps (Slack, Teams, Discord, Outlook, Mail)
     O = ['EV2780', 'secondary'] # Obsidian
@@ -172,10 +173,10 @@ on-mode-changed = []
     alt-0 = ['workspace 0', 'mode main']
     alt-a = ['workspace A', 'mode main']
     alt-b = ['exec-and-forget open /Applications/Zen.app', 'workspace B', 'mode main']
-    # alt-c = ['workspace C', 'mode main']
+    alt-c = ['exec-and-forget open /Applications/Codex.app', 'workspace C', 'mode main']
     alt-d = ['exec-and-forget open /Applications/Discord.app', 'workspace M', 'mode main']
     alt-e = ['exec-and-forget /bin/sh -lc "exec $HOME/.config/aerospace/open-emacs.sh"', 'workspace E', 'mode main']
-    alt-f = ['exec-and-forget open /System/Library/CoreServices/Finder.app', 'mode main']
+    alt-f = ['exec-and-forget /bin/sh -lc "exec $HOME/.config/aerospace/focus-app-here.sh finder"', 'mode main']
     alt-g = ['workspace G', 'mode main']
     alt-i = ['workspace I', 'mode main']
     alt-m = ['exec-and-forget open /Applications/Slack.app', 'workspace M', 'mode main']
@@ -183,6 +184,7 @@ on-mode-changed = []
     alt-o = ['exec-and-forget open /Applications/Obsidian.app', 'workspace O', 'mode main']
     alt-p = ['workspace P', 'mode main']
     alt-q = ['workspace Q', 'mode main']
+    alt-r = ['exec-and-forget /bin/sh -lc "exec $HOME/.config/aerospace/focus-app-here.sh emacs"', 'mode main']
     alt-s = ['exec-and-forget open /Applications/Powerpoint.app', 'workspace S', 'mode main']
     alt-t = ['exec-and-forget open /Applications/Microsoft\ Teams.app', 'workspace M', 'mode main']
     alt-u = ['workspace U', 'mode main']
@@ -205,7 +207,7 @@ on-mode-changed = []
     alt-shift-0 = ['move-node-to-workspace 0', 'mode main']
     alt-shift-a = ['move-node-to-workspace A', 'mode main']
     alt-shift-b = ['move-node-to-workspace B', 'mode main']
-    # alt-shift-c = ['move-node-to-workspace C', 'mode main']
+    alt-shift-c = ['move-node-to-workspace C', 'mode main']
     alt-shift-d = ['move-node-to-workspace D', 'mode main']
     alt-shift-e = ['move-node-to-workspace E', 'mode main']
     alt-shift-f = ['move-node-to-workspace F', 'mode main']
@@ -271,6 +273,11 @@ on-mode-changed = []
 [[on-window-detected]]
     if.app-id = 'app.zen-browser.zen'
     run = 'move-node-to-workspace B'
+
+# Workspace C: Codex
+[[on-window-detected]]
+    if.app-id = 'com.openai.codex'
+    run = 'move-node-to-workspace C'
 
 # workspace E: Emacs
 [[on-window-detected]]
