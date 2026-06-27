@@ -23,8 +23,7 @@
 
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 (setopt display-line-numbers-width 3)
-
-(add-hook 'text-mode-hook #'visual-line-mode)
+(setq-default truncate-lines t)
 
 (use-package hl-line
   :ensure nil

@@ -18,9 +18,7 @@
 
 (use-package markdown-mode
   :ensure t
-  :mode ("\\.md\\'" . markdown-mode)
-  :hook
-  (markdown-mode . visual-line-mode))
+  :mode ("\\.md\\'" . markdown-mode))
 
 (use-package magit
   :ensure t

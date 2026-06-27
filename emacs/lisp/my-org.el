@@ -111,6 +111,7 @@
   "Set buffer-local Org editing preferences."
   (visual-line-mode 1)
   (org-indent-mode 1)
+  (setq-local truncate-lines nil)
   (setq-local line-spacing 0.2)
   (setq-local word-wrap-by-category t))
 
@@ -194,7 +195,7 @@
            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:EFFORT: 0:30\n:END:\n")
           ("t" "Task" entry
            (file ,(my/org-file "tasks.org"))
-           "* TODO %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:EFFORT: 0:30\n:END:\n")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:EFFORT: 0:30\n:END:\n")
           ("p" "Project" entry
            (file ,(my/org-file "projects.org"))
            "* PROJECT %?\n:PROPERTIES:\n:CREATED: %U\n:AREA: \n:END:\n\n** NEXT \n:PROPERTIES:\n:EFFORT: 0:30\n:END:\n")))
@@ -259,29 +260,29 @@
                ":RELEVANCE:\n"
                ":END:\n\n"
                "* Pass 1: Screening\n"
-               "- Category: \n"
-               "- Context: \n"
-               "- Correctness: \n"
-               "- Contributions: \n"
-               "- Clarity: \n"
-               "- Decision: read / skip / later\n"
-               "- Why: \n\n"
+               "** Category: \n"
+               "** Context: \n"
+               "** Correctness: \n"
+               "** Contributions: \n"
+               "** Clarity: \n"
+               "** Decision: read / skip / later\n"
+               "** Why: \n\n"
                "* Pass 2: Understanding\n"
-               "- One-sentence summary: \n"
-               "- Problem: \n"
-               "- Method: \n"
-               "- Evidence: \n"
-               "- Limitations: \n"
-               "- Questions: \n"
-               "- Important figures/tables: \n"
-               "- References to follow: \n\n"
+               "** One-sentence summary: \n"
+               "** Problem: \n"
+               "** Method: \n"
+               "** Evidence: \n"
+               "** Limitations: \n"
+               "** Questions: \n"
+               "** Important figures/tables: \n"
+               "** References to follow: \n\n"
                "* Pass 3: Deep Reading\n"
-               "- Reconstructed argument: \n"
-               "- Assumptions: \n"
-               "- Hidden assumptions: \n"
-               "- Weaknesses: \n"
-               "- Missing references: \n"
-               "- Ideas for my work: \n")
+               "** Reconstructed argument: \n"
+               "** Assumptions: \n"
+               "** Hidden assumptions: \n"
+               "** Weaknesses: \n"
+               "** Missing references: \n"
+               "** Ideas for my work: \n")
       :target (file+head "Paper/${citar-citekey}.org"
                          "#+title: ${note-title}\n#+filetags: :paper:\n")
       :unnarrowed t)))

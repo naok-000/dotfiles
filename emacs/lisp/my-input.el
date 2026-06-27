@@ -24,6 +24,13 @@
 (declare-function skk-reread-private-jisyo "skk" (&optional force))
 (declare-function skk-save-jisyo-original "skk" (&optional quiet))
 (declare-function skk-update-jisyo "skk" (word &optional purge))
+(declare-function ccc-setup "ccc")
+(declare-function skk-color-cursor-display-p "skk-macs")
+(declare-function skk-cursor-set "skk-macs" (&optional color force))
+
+(defvar skk-background-mode)
+(defvar skk-use-color-cursor)
+(setq skk-background-mode 'light)
 
 (defun my/skk-jisyo-mtime ()
   "Return the current modification time of `skk-jisyo'."
@@ -67,6 +74,21 @@
     (skk-mode 1)
     (skk-latin-mode-on)))
 
+(defun my/setup-skk-cursor-color (&optional frame)
+  "Enable DDSKK cursor coloring for graphical FRAME."
+  (let ((target-frame (or frame (selected-frame))))
+    (when (and (frame-live-p target-frame)
+               (window-system target-frame))
+      (with-selected-frame target-frame
+        (when (skk-color-cursor-display-p)
+          (require 'ccc)
+          (ccc-setup)
+          (setq skk-use-color-cursor t)
+          (dolist (buffer (buffer-list))
+            (with-current-buffer buffer
+              (when (bound-and-true-p skk-mode)
+                (skk-cursor-set nil 'force)))))))))
+
 (use-package ddskk
   :ensure t
   :demand t
@@ -98,6 +120,8 @@
                   skk-rom-kana-rule-list))
 
   (my/enable-skk-mode)
+  (my/setup-skk-cursor-color)
+  (add-hook 'after-make-frame-functions #'my/setup-skk-cursor-color)
   (add-hook 'after-change-major-mode-hook #'my/enable-skk-mode))
 
 (provide 'my-input)
