@@ -36,3 +36,9 @@ $ git add . && sudo darwin-rebuild -- switch --flake .#kobayashinaoto
 - Add or change app behavior: `nix/modules/`
   - `nix/modules/dev/` for editor/development tools.
   - `nix/modules/shell/` for shell and CLI tools.
+
+## Maintenance Guidelines
+
+- Prefer built-in features, standard library functions, and package-provided APIs over custom helper functions.
+- Before adding a new helper, check whether Nix, Home Manager, Emacs, NeoVim, or the relevant package already provides the behavior.
+- Add local abstractions only when they clearly reduce repeated complexity and remain simpler than using the existing tool directly.

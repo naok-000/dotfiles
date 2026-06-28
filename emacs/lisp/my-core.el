@@ -29,9 +29,12 @@
 (setq package-selected-packages
       '(adaptive-wrap agent-shell citar citar-org-roam consult consult-ghq dashboard ddskk
                       exec-path-from-shell fontaine markdown-mode mixed-pitch
-                      magit marginalia no-littering orderless org-appear
-                      org-fragtog org-roam spacious-padding vertico vterm
+                      magit marginalia nerd-icons nerd-icons-dired no-littering
+                      orderless org-appear org-fragtog org-roam spacious-padding vertico vterm
                       which-key))
+
+(unless noninteractive
+  (package-install-selected-packages t))
 
 (use-package no-littering
   :ensure t

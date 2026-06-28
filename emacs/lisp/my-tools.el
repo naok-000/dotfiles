@@ -24,6 +24,12 @@
   :ensure t
   :bind (("C-x g" . magit-status)))
 
+(use-package nerd-icons-dired
+  :ensure t
+  :after dired
+  :config
+  (add-hook 'dired-mode-hook #'nerd-icons-dired-mode))
+
 (defun my/vterm-project ()
   "Open vterm in the current project root."
   (interactive)
