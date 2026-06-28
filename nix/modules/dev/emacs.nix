@@ -1,83 +1,14 @@
 {
   config,
-  lib,
   pkgs,
   dotfilesMutableRoot,
   ...
-}: let
-  skkEnv = lib.filterAttrs (name: _: lib.hasPrefix "SKK_" name) config.home.sessionVariables;
-  glibtool = pkgs.runCommand "glibtool" {} ''
-    mkdir -p "$out/bin"
-    ln -s "${pkgs.libtool}/bin/libtool" "$out/bin/glibtool"
-    ln -s "${pkgs.libtool}/bin/libtoolize" "$out/bin/glibtoolize"
-  '';
-  vtermBuildTools = with pkgs; [
-    cmake
-    glibtool
-    git
-    gnumake
-    libtool
-    pkg-config
-  ];
-  vtermBuildToolsPath = lib.makeBinPath vtermBuildTools;
-  appEnv =
-    skkEnv
-    // {
-      XDG_CONFIG_HOME = config.xdg.configHome;
-      XDG_DATA_HOME = config.xdg.dataHome;
-      XDG_STATE_HOME = config.xdg.stateHome;
-    };
-  wrapperEnvFlags = lib.concatLists (lib.mapAttrsToList (name: value: [
-      "--set"
-      name
-      value
-    ])
-    appEnv);
-  emacsClientApp = pkgs.stdenv.mkDerivation {
-    pname = "emacs-client-app";
-    version = pkgs.emacs.version;
-    nativeBuildInputs = [
-      pkgs.makeBinaryWrapper
-    ];
-    dontUnpack = true;
-    installPhase = ''
-      runHook preInstall
-
-      mkdir -p "$out/bin" "$out/Applications"
-      cp -R "${pkgs.emacs}/Applications/Emacs.app" "$out/Applications/"
-      chmod -R u+w "$out/Applications/Emacs.app"
-      mkdir -p "$out/lib/emacs/${pkgs.emacs.version}"
-      ln -s "${pkgs.emacs}/lib/emacs/${pkgs.emacs.version}/native-lisp" "$out/lib/emacs/${pkgs.emacs.version}/native-lisp"
-
-      makeBinaryWrapper "${pkgs.emacs}/Applications/Emacs.app/Contents/MacOS/Emacs" "$out/bin/emacs" \
-        ${lib.escapeShellArgs wrapperEnvFlags} \
-        --set EMACS "$out/bin/emacs" \
-        --prefix PATH : ${lib.escapeShellArg vtermBuildToolsPath} \
-        --add-flag ${lib.escapeShellArg "--init-directory=${config.home.homeDirectory}/.emacs.d"}
-
-      ln -s "${pkgs.emacs}/bin/emacsclient" "$out/bin/emacsclient"
-
-      makeBinaryWrapper "${pkgs.runtimeShell}" "$out/Applications/Emacs.app/Contents/MacOS/Emacs" \
-        ${lib.escapeShellArgs wrapperEnvFlags} \
-        --set EMACS "$out/bin/emacs" \
-        --prefix PATH : "$out/bin" \
-        --prefix PATH : ${lib.escapeShellArg vtermBuildToolsPath} \
-        --add-flag -c \
-        --add-flag ${lib.escapeShellArg "exec ${pkgs.emacs}/bin/emacsclient -c -n --alternate-editor="}
-
-      runHook postInstall
-    '';
-  };
-  emacsPackage =
-    if pkgs.stdenv.isDarwin
-    then emacsClientApp
-    else pkgs.emacs;
-in {
+}: {
   home.file = {
     ".emacs.d".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesMutableRoot}/emacs";
   };
 
   home.packages = [
-    emacsPackage
+    pkgs.emacs
   ];
 }

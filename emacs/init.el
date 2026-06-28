@@ -16,6 +16,11 @@
 (require 'my-dashboard)
 (require 'my-org)
 
+(unless noninteractive
+  (require 'server)
+  (unless (server-running-p)
+    (server-start)))
+
 (setq gc-cons-threshold (or bedrock--initial-gc-threshold 800000))
 
 ;; Keep Customize writes out of the Nix-managed init file.

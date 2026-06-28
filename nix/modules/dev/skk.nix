@@ -4,13 +4,10 @@
   lib,
   ...
 }: let
-  skkDataDir = ".local/share/skk";
+  skkDataDir = ".local/skk";
+  skkDir = "${config.home.homeDirectory}/${skkDataDir}";
   skkUserDictionary = "skk-jisyo.utf8";
-  macSkkUserDictionary = "${config.home.homeDirectory}/Library/Containers/net.mtgto.inputmethod.macSKK/Data/Documents/Dictionaries/${skkUserDictionary}";
-  userDictionary =
-    if pkgs.stdenv.isDarwin
-    then macSkkUserDictionary
-    else "${config.home.homeDirectory}/${skkDataDir}/${skkUserDictionary}";
+  userDictionary = "${skkDir}/${skkUserDictionary}";
 
   dictionaries = with pkgs.skkDictionaries; [
     {
@@ -88,10 +85,26 @@
   ];
 
   dictionarySource = dictionary: "${dictionary.package}/share/skk/${dictionary.file}";
-  globalDictionaries = map dictionarySource dictionaries;
 in {
-  home.sessionVariables = {
-    SKK_GLOBAL_DICTIONARIES = lib.concatStringsSep ":" globalDictionaries;
-    SKK_USER_DICTIONARY = userDictionary;
-  };
+  home.file =
+    lib.listToAttrs
+    (map (dictionary: {
+        name = "${skkDataDir}/${dictionary.file}";
+        value.source = dictionarySource dictionary;
+      })
+      dictionaries);
+
+  home.activation.skkUserDictionary =
+    lib.hm.dag.entryAfter [
+      "writeBoundary"
+    ] ''
+            mkdir -p "${skkDir}"
+
+            if [[ ! -e "${userDictionary}" ]]; then
+              cat > "${userDictionary}" <<'EOF'
+      ;; okuri-ari entries.
+      ;; okuri-nasi entries.
+      EOF
+            fi
+    '';
 }

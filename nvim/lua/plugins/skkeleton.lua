@@ -3,18 +3,34 @@ return {
 		"vim-skk/skkeleton",
 		dependencies = { "vim-denops/denops.vim" },
 		config = function()
-			local global_dictionaries = vim.split(vim.env.SKK_GLOBAL_DICTIONARIES or "", ":", {
-				plain = true,
-				trimempty = true,
-			})
+			local skk_dir = vim.fn.expand("~/.local/skk")
 
 			local skkeleton_config = {
-				globalDictionaries = global_dictionaries,
-				completionRankFile = vim.fn.expand("~/.local/share/skk/rank.json"),
+				globalDictionaries = {
+					skk_dir .. "/SKK-JISYO.L",
+					skk_dir .. "/SKK-JISYO.itaiji",
+					skk_dir .. "/SKK-JISYO.itaiji.JIS3_4",
+					skk_dir .. "/SKK-JISYO.JIS2",
+					skk_dir .. "/SKK-JISYO.JIS2004",
+					skk_dir .. "/SKK-JISYO.JIS3_4",
+					skk_dir .. "/SKK-JISYO.law",
+					skk_dir .. "/SKK-JISYO.mazegaki",
+					skk_dir .. "/SKK-JISYO.geo",
+					skk_dir .. "/SKK-JISYO.station",
+					skk_dir .. "/SKK-JISYO.zipcode",
+					skk_dir .. "/SKK-JISYO.office.zipcode",
+					skk_dir .. "/SKK-JISYO.china_taiwan",
+					skk_dir .. "/SKK-JISYO.okinawa",
+					skk_dir .. "/SKK-JISYO.edict",
+					skk_dir .. "/SKK-JISYO.propernoun",
+					skk_dir .. "/SKK-JISYO.jinmei",
+					skk_dir .. "/SKK-JISYO.fullname",
+				},
+				completionRankFile = skk_dir .. "/rank.json",
 				eggLikeNewline = true,
 				markerHenkan = "",
 				markerHenkanSelect = "",
-				userDictionary = vim.env.SKK_USER_DICTIONARY,
+				userDictionary = skk_dir .. "/skk-jisyo.utf8",
 			}
 
 			vim.fn["skkeleton#config"](skkeleton_config)

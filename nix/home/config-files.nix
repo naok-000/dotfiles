@@ -30,16 +30,20 @@ in {
           #!/bin/sh
           set -eu
 
-          emacs_window_id="$(${pkgs.aerospace}/bin/aerospace list-windows --monitor all --app-bundle-id org.gnu.Emacs --format '%{window-id}' | /usr/bin/head -n 1)"
+          aerospace=${pkgs.aerospace}/bin/aerospace
+          emacsclient=${pkgs.emacs}/bin/emacsclient
+          emacs_app="$HOME/Applications/Home Manager Apps/Emacs.app"
+
+          emacs_window_id="$("$aerospace" list-windows --monitor all --app-bundle-id org.gnu.Emacs --format '%{window-id}' | /usr/bin/head -n 1)"
 
           if [ -n "$emacs_window_id" ]; then
-            ${pkgs.aerospace}/bin/aerospace move-node-to-workspace --window-id "$emacs_window_id" E
-            ${pkgs.aerospace}/bin/aerospace workspace E
-            exec ${pkgs.aerospace}/bin/aerospace focus --window-id "$emacs_window_id"
+            "$aerospace" move-node-to-workspace --window-id "$emacs_window_id" E
+            "$aerospace" workspace E
+            exec "$aerospace" focus --window-id "$emacs_window_id"
           fi
 
-          open "$HOME/Applications/Home Manager Apps/Emacs.app"
-          exec ${pkgs.aerospace}/bin/aerospace workspace E
+          "$emacsclient" -c -n >/dev/null 2>&1 || open "$emacs_app"
+          exec "$aerospace" workspace E
         '';
         executable = true;
       };
@@ -49,6 +53,7 @@ in {
           set -eu
 
           aerospace=${pkgs.aerospace}/bin/aerospace
+          emacsclient=${pkgs.emacs}/bin/emacsclient
           profile="''${1:-}"
 
           case "$profile" in
@@ -81,7 +86,14 @@ in {
           target_window_id="$(window_id || true)"
 
           if [ -z "$target_window_id" ]; then
-            open "$open_target"
+            case "$profile" in
+              emacs)
+                "$emacsclient" -c -n >/dev/null 2>&1 || open "$open_target"
+                ;;
+              *)
+                open "$open_target"
+                ;;
+            esac
 
             for _ in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20; do
               sleep 0.1

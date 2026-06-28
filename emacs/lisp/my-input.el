@@ -4,18 +4,35 @@
   :ensure t
   :if (memq window-system '(mac ns x pgtk))
   :config
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-envs
-   '("SKK_USER_DICTIONARY" "SKK_GLOBAL_DICTIONARIES")))
+  (exec-path-from-shell-initialize))
+
+(defvar my/skk-directory
+  (expand-file-name "~/.local/skk/"))
 
 (defvar my/skk-user-dictionary
-  (getenv "SKK_USER_DICTIONARY"))
+  (expand-file-name "skk-jisyo.utf8" my/skk-directory))
 
 (defvar my/skk-global-dictionaries
-  (mapcar (lambda (path) (cons path 'euc-jp))
-          (split-string (or (getenv "SKK_GLOBAL_DICTIONARIES") "")
-                        path-separator
-                        t)))
+  (mapcar
+   (lambda (file) (cons (expand-file-name file my/skk-directory) 'euc-jp))
+   '("SKK-JISYO.L"
+     "SKK-JISYO.itaiji"
+     "SKK-JISYO.itaiji.JIS3_4"
+     "SKK-JISYO.JIS2"
+     "SKK-JISYO.JIS2004"
+     "SKK-JISYO.JIS3_4"
+     "SKK-JISYO.law"
+     "SKK-JISYO.mazegaki"
+     "SKK-JISYO.geo"
+     "SKK-JISYO.station"
+     "SKK-JISYO.zipcode"
+     "SKK-JISYO.office.zipcode"
+     "SKK-JISYO.china_taiwan"
+     "SKK-JISYO.okinawa"
+     "SKK-JISYO.edict"
+     "SKK-JISYO.propernoun"
+     "SKK-JISYO.jinmei"
+     "SKK-JISYO.fullname")))
 
 (defvar my/skk-jisyo-mtime nil)
 
@@ -95,7 +112,7 @@
   :bind (("C-x C-j" . skk-mode))
   :custom
   (default-input-method "japanese-skk")
-  (skk-user-directory "~/.local/share/skk")
+  (skk-user-directory my/skk-directory)
   (skk-jisyo my/skk-user-dictionary)
   (skk-backup-jisyo (and my/skk-user-dictionary
                          (concat my/skk-user-dictionary ".BAK")))
