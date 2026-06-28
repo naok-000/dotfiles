@@ -187,6 +187,13 @@
   (require 'org-clock)
   (require 'org-id)
   (org-clock-persistence-insinuate)
+  (let* ((process (alist-get 'dvisvgm org-preview-latex-process-alist))
+         (process (plist-put process :programs '("dvilualatex" "dvisvgm")))
+         (process (plist-put process :message
+                             "you need to install the programs: dvilualatex and dvisvgm."))
+         (process (plist-put process :latex-compiler
+                             '("dvilualatex -interaction nonstopmode -output-directory %o %f"))))
+    (setf (alist-get 'dvisvgm org-preview-latex-process-alist) process))
   (setq org-format-latex-options
         (plist-put org-format-latex-options :scale 1.7))
   (setq org-capture-templates
